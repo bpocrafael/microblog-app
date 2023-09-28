@@ -1,0 +1,63 @@
+version: '3.7'
+
+networks:
+  app: 
+
+services:
+  webnginx:
+    image: nginx:latest
+    container_name: webnginx
+    ports:
+      - 13081:80
+    volumes:
+      - ./src:/var/www/html
+      - ./infrastracture/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+      - database
+    networks:
+      - app
+
+  backend:
+    build: 
+      context: .
+      dockerfile: ./infrastracture/php/Dockerfile
+    container_name: backend
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - 9000:9000
+    restart: unless-stopped
+    depends_on:
+      - database
+    networks:
+      - app
+
+  database:
+    image: mysql:5.7.22
+    container_name: database
+    restart: unless-stopped
+    tty: true 
+    ports:
+      - 13305:3306
+    environment:
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=homestead
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=secret
+    volumes:
+      - ./infrastracture/mysql:/var/lib/mysql
+    networks:
+      - app
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 13082:80
+    environment:
+      PMA_HOST: database
+    depends_on:
+      - database
+    networks:
+      - app
