@@ -7,6 +7,7 @@ WORKDIR /var/www/html
 # Copy the package files to the container
 COPY ./src/package*.json ./
 
+
 # Copy the rest of the application source code to the container
 COPY ./src .
 
