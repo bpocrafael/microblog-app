@@ -76,3 +76,4 @@ services:
       - database
     networks:
       - app
+      
