@@ -21,14 +21,14 @@ services:
   nodejs:
     build:
       context: .
-      dockerfile: ./infrastracture/node/Dockerfile # Use the Dockerfile for Node.js
+      dockerfile: ./infrastracture/node/Dockerfile
     container_name: nodejs
     volumes:
-      - ./src:/var/www/html  # Mount your Node.js application code
+      - ./src:/var/www/html
     ports:
-      - 3000:3000  # Map container port to host port if needed
+      - 3000:3000
     depends_on:
-      - backend  # Depend on your backend service or change as needed
+      - backend
     networks:
       - app
     command: sh -c "npm install && npm run dev"
@@ -76,4 +76,3 @@ services:
       - database
     networks:
       - app
-      
