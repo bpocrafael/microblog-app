@@ -1,6 +1,7 @@
-@extends('layout/layout')
+@extends('layout.app')
 
-<body>
+@section('content')
+
   <section class="vh-100" style="background-color: #023047;">
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -61,4 +62,5 @@
       </div>
     </div>
   </section>
-</body>
+
+@section('content')
