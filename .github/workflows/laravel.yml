@@ -5,10 +5,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 jobs:
   laravel-tests:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -16,24 +14,16 @@ jobs:
       with:
         php-version: '8.1'
     - uses: actions/checkout@v3
-    - name: change directory to src
-      run: cd ./src
-    - name: check directory
-      run: ls -la
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-    - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Generate key
-      run: php artisan key:generate
-    - name: Directory Permissions
-      run: chmod -R 777 storage bootstrap/cache
-    - name: Create Database
+    - name: Setup and run all commands inside ./src
       run: |
-        mkdir -p database
-        touch database/database.sqlite
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
+        cd ./src &&
+        php -r "file_exists('.env') || copy('.env.example', '.env');" &&
+        composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist &&
+        php artisan key:generate &&
+        chmod -R 777 storage bootstrap/cache &&
+        mkdir -p database &&
+        touch database/database.sqlite &&
+        vendor/bin/phpunit
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
-      run: vendor/bin/phpunit
