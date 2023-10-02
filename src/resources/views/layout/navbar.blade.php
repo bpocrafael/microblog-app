@@ -32,6 +32,4 @@
             <span class="text-white mr-2">User Name</span>
         </div>
     </nav>
-
     @yield('content')
-    
