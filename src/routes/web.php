@@ -14,9 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('register');
-});
-
+Route::get('/', [RegisterController::class, 'view']);
 Route::post('/register', [RegisterController::class, 'register']);
-
