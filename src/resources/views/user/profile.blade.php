@@ -1,6 +1,8 @@
-@extends('layout/navbar')
+@extends('layout.app')
+@extends('layout.navbar')
+
 @section('content')
-    <!-- Create Post Section -->
+
     <div class="container my-4">
         <div class="card">
             <div class="card-header" style="background-color: #2190AE">
@@ -9,7 +11,7 @@
             <div class="card-body">
                 <form method="POST" action="" enctype="multipart/form-data">
                     @csrf
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <textarea class="form-control" id="post_content" name="post_content" rows="3" columns="3" maxlength="140"></textarea>
                     </div>
                     <div class="form-group">
@@ -29,7 +31,6 @@
         </div>
     </div>
 
-    <!-- Posts Section -->
     <div class="container my-4">
         <div class="card">
             <div class="card-header" style="background-color: #FFA903">
@@ -71,5 +72,3 @@
         </div>
     </div>
 @endsection
-</body>
-</html>
