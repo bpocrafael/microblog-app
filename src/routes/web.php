@@ -15,6 +15,8 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', [RegisterController::class, 'view']);
+
+Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::get('/register', [RegisterController::class, 'view'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
-Route::get('/', [LoginController::class, 'index']);
+
