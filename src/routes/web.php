@@ -3,6 +3,7 @@
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +20,4 @@ use App\Http\Controllers\LoginController;
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::get('/register', [RegisterController::class, 'view'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
-
+Route::get('/', [UserController::class, 'profile']);
