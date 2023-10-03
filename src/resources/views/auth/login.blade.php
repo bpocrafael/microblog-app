@@ -33,9 +33,10 @@
   
                     <div class="form-check d-flex justify-content-center mb-5">
                       <label class="form-check-label" for="form2Example3">
-                        Don't have an account? <a href="#!">Sign Up</a>
+                        Don't have an account? <a href="{{ route('register') }}">Sign Up</a>
                       </label>
                     </div>
+                    
   
                     <div class="d-flex justify-content-center mx-4 mb-2 mb-lg-4">
                       <button type="button" class="btn btn-lg" style="background-color: #FFA903;">Login</button>
