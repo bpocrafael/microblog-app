@@ -4,11 +4,11 @@
 @section('content')
 
     <div class="container my-4">
-        <div class="card">
-            <div class="card-header" style="background-color: #2190AE">
+        <div class="card shadow-lg">
+            <div class="card-header" style="background-color: #023047">
                 <h5 class="my-2 text-light">Create your Post</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="background-color: #EAF2F8">
                 <form method="POST" action="" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group mb-2">
@@ -32,39 +32,39 @@
     </div>
 
     <div class="container my-4">
-        <div class="card">
-            <div class="card-header" style="background-color: #FFA903">
+        <div class="card shadow">
+            <div class="card-header" style="background-color: #2190AE">
                 <h3 class="my-2 text-white">Your Posts</h3>
             </div>
                 <ul class="list-group">
-                    <li class="list-group-item">
+                    <li class="list-group-item" style="background-color: #EBF5FB">
                         <h5 class="card-title">User Name</h5>
                         <p class="card-text">Sample1 post of the User</p>
                         <img src="" alt="Post Image" class="img-fluid">
                         <div class="interaction mt-4">
                             <a href="#" class="btn btn-sm btn-primary like">Like</a>
-                            <a href="#" class="btn btn-sm btn-secondary comment">Comment</a>
-                            <a href="#" class="btn btn-sm btn-info share">Share</a>
+                            <a href="#" class="btn btn-sm btn-success comment">Comment</a>
+                            <a href="#" class="btn btn-sm btn-danger share">Share</a>
                         </div>
                     </li>
-                    <li class="list-group-item">
+                    <li class="list-group-item" style="background-color: #EBF5FB">
                         <h5 class="card-title">User Name</h5>
                         <p class="card-text">Sample2 post of the User</p>
                         <img src="" alt="Post Image" class="img-fluid">
                         <div class="interaction mt-4">
                             <a href="#" class="btn btn-sm btn-primary like">Like</a>
-                            <a href="#" class="btn btn-sm btn-secondary comment">Comment</a>
-                            <a href="#" class="btn btn-sm btn-info share">Share</a>
+                            <a href="#" class="btn btn-sm btn-success comment">Comment</a>
+                            <a href="#" class="btn btn-sm btn-danger share">Share</a>
                         </div>
                     </li>
-                    <li class="list-group-item">
+                    <li class="list-group-item" style="background-color: #EBF5FB">
                         <h5 class="card-title">User Name</h5>
                         <p class="card-text">Sample3 post of the User</p>
                         <img src="" alt="Post Image" class="img-fluid">
                         <div class="interaction mt-4">
                             <a href="#" class="btn btn-sm btn-primary like">Like</a>
-                            <a href="#" class="btn btn-sm btn-secondary comment">Comment</a>
-                            <a href="#" class="btn btn-sm btn-info share">Share</a>
+                            <a href="#" class="btn btn-sm btn-success comment">Comment</a>
+                            <a href="#" class="btn btn-sm btn-danger share">Share</a>
                         </div>
                     </li>
                 </ul>
