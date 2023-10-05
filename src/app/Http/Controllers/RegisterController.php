@@ -21,6 +21,6 @@ class RegisterController extends Controller
         $incomingFields['password'] = bcrypt($incomingFields['password']);
         $user = User::create($incomingFields);
         auth()->login($user);
-        return redirect('profile/show');
+        return redirect()->route('profile.show');
     }
 }
