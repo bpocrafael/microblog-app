@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
+use App\Models\Post;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -14,7 +15,8 @@ class UserController extends Controller
 
     public function home(): View
     {
-        return view('user/home');
+        $posts = Post::all();
+        return view('user.home', ['posts' => $posts]);
     }
 
     public function logout(): RedirectResponse
