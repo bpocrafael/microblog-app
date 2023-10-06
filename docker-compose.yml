@@ -18,20 +18,20 @@ services:
     networks:
       - app
 
- #nodejs:
- #  build:
- #    context: .
- #    dockerfile: ./infrastracture/node/Dockerfile
- #  container_name: nodejs
- #  volumes:
- #    - ./src:/var/www/html
- #  ports:
- #    - 3000:3000
- #  depends_on:
- #    - backend
- #  networks:
- #    - app
- #  command: sh -c "npm install && npm run dev"
+  nodejs:
+    build:
+      context: .
+      dockerfile: ./infrastracture/node/Dockerfile
+    container_name: nodejs
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+    networks:
+      - app
+    command: sh -c "npm install && npm run dev"
 
   backend:
     build:
