@@ -28,4 +28,8 @@ migrate_db:
 	docker-compose exec -it backend php artisan module:seed
 
 optimize:
+<<<<<<< HEAD
 	docker-compose exec -it backend php artisan optimize:clear
+=======
+	docker-compose exec -it backend php artisan optimize:clear
+>>>>>>> 712d128 (Fixed Dockerfile)
