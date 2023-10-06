@@ -34,7 +34,10 @@ services:
     command: sh -c "npm install && npm run dev"
 
   backend:
-    build: 
+    build:
+      args:
+        user: sammy
+        uid: 1000
       context: .
       dockerfile: ./infrastracture/php/Dockerfile
     container_name: backend
