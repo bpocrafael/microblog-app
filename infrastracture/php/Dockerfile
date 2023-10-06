@@ -32,4 +32,9 @@ RUN mkdir -p /home/$user/.composer && \
 WORKDIR /var/www/html
 COPY ./src ./
 
+# Set permissions on the Laravel storage directory
+RUN mkdir -p /var/www/html/storage && \
+    chown -R www-data:www-data /var/www/html/storage && \
+    chmod -R 775 /var/www/html/storage
+
 USER $user
