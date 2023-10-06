@@ -29,7 +29,11 @@ migrate_db:
 
 optimize:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	docker-compose exec -it backend php artisan optimize:clear
 =======
 	docker-compose exec -it backend php artisan optimize:clear
 >>>>>>> 712d128 (Fixed Dockerfile)
+=======
+	docker-compose exec -it backend php artisan optimize:clear
+>>>>>>> 46377d1 (Added new line)
