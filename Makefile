@@ -13,11 +13,11 @@ build:
 build-no-cache:
 	docker-compose build --no-cache
 
-backend:
-	docker exec -it backend /bin/bash
-
 database:
 	docker exec -it database /bin/bash
+
+backend:
+	docker exec -it backend /bin/bash
 
 migrate_db:
 	if ! [ -f ./src/backend/.env ];then cp ./src/backend/.env.example ./src/backend/.env;fi
