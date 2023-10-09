@@ -85,20 +85,12 @@
                 <div class="card-header" style="background-color: #FFA903">
                     <h2 class="my-2 text-white text-center">Microblog Newsfeed</h2>
                 </div>
-                <ul class="list-group">
-                    @foreach ($posts as $post)
-                    <li class="list-group-item" style="background-color: #FFFFF0">
-                        <h5 class="card-title">User Name</h5>
-                        <p class="card-text">{{$post->content}}</p>
-                        <img src="{{asset(''.$post->image)}}" alt="Post Image" class="img-fluid">
-                        <div class="interaction mt-4">
-                            <a href="#" class="btn btn-sm btn-primary like">Like</a>
-                            <a href="#" class="btn btn-sm btn-success comment">Comment</a>
-                            <a href="#" class="btn btn-sm btn-danger share">Share</a>
-                        </div>
-                    </li>
-                    @endforeach
-                </ul>
+                @include('post.show')
+                <div class="card-footer" style="background-color: #FFA903;">
+                    <div class="d-flex justify-content-center">
+                        {{ $posts->links() }}
+                    </div>
+                </div>                
             </div>
         </div>
     </div>
