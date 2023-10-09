@@ -16,7 +16,10 @@ return new class extends Migration
             $table->timestamps();
             $table->string('content');
             $table->string('image')->nullable();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
