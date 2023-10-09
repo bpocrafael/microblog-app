@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-    @include('layout.head')
+    @include('layouts.head')
 </head>
 <body>
     <div>
@@ -8,6 +8,6 @@
             @yield('content')
         </main>
     </div>
-    @include('layout.scripts')
+    @include('layouts.scripts')
 </body>
 </html>
