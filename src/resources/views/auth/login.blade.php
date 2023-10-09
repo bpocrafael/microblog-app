@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.app')
 
 @section('content')
 
@@ -28,7 +28,7 @@
                       <div class="form-outline flex-fill mb-0">
                         <label class="form-label" for="form3Example4c">Password</label>
                         <input name="password" type="password" id="form3Example4c" class="form-control" />
-                        <a href="#!">Forgot Password</a>
+                        <a href="{{ route('password.request') }}">Forgot Password</a>
                       </div>
                     </div>
   
