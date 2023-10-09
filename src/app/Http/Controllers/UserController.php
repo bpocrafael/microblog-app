@@ -11,7 +11,6 @@ class UserController extends Controller
 {
     public function show(): View
     {
-        $user = Auth::user();
         $posts = Post::latest()->paginate(4);
         return view('user.profile', ['posts' => $posts]);
     }
