@@ -20,6 +20,7 @@ class ForgotPasswordController extends Controller
     }
 
     // Send a reset link to the given user.
+
     public function sendResetLinkEmail(Request $request): RedirectResponse
     {
         $this->validateEmail($request);
@@ -31,5 +32,10 @@ class ForgotPasswordController extends Controller
         return $response == Password::RESET_LINK_SENT
             ? $this->sendResetLinkResponse($request, $response)
             : $this->sendResetLinkFailedResponse($request, $response);
+    }
+
+    protected function validateEmail(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
     }
 }
