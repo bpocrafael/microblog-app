@@ -13,4 +13,4 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register.s
 Route::get('/profile/show', [UserController::class, 'show'])->name('profile.show');
 Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
 Route::get('/home', [UserController::class, 'home'])->name('user.home');
-Route::post('/post', [PostController::class, 'store'])->name('post.store');
+Route::post('/posts', [PostController::class, 'store'])->name('post.store');
