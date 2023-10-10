@@ -7,13 +7,10 @@ use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 
 class VerificationController extends Controller
 {
-        /**
-     * Display the email verification notice.
-     */
+     //Display the email verification notice.
     public function show(Request $request): View
     {
         return view('auth.verify');
@@ -21,9 +18,8 @@ class VerificationController extends Controller
 
     protected static $verify_redirect = '/';
 
-    /**
-     * Mark the authenticated user's email address as verified.
-     */
+     //Mark the authenticated user's email address as verified.
+
     public function verify(Request $request): RedirectResponse
     {
         if (! $request->hasValidSignature()) {

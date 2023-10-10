@@ -2,45 +2,34 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use App\Http\Requests\ResetPasswordRequest;
 
 class ResetPasswordController extends Controller
 {
-    use ResetsPasswords;
-
-    /**
-     * Where to redirect users after resetting their password.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
-
-    // Display the password reset view
-    public function showResetForm(Request $request, $token = null)
-    {
-        return view('auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email]
-        );
-    }
-
-    // Get the password reset guard
-    protected function guard()
-    {
-        return Auth::guard();
-    }
-
-    // Get the password broker
-    protected function broker()
-    {
-        return Password::broker();
-    }
+     // Show the password reset form
+     public function showResetForm(Request $request, $token)
+     {
+         return view('auth.passwords.reset', ['token' => $token, 'email' => $request->email]);
+     }
+ 
+     // Reset the user's password
+     public function reset(ResetPasswordRequest $request)
+     {
+         $response = Password::reset($request->only(
+             'email', 'password', 'password_confirmation', 'token'
+         ), function ($user, $password) {
+             $user->forceFill([
+                 'password' => Hash::make($password),
+                 'remember_token' => str()->random(60),
+             ])->save();
+         });
+ 
+         return $response == Password::PASSWORD_RESET
+             ? redirect()->route('view.login')->with('status', trans($response))
+             : back()->withErrors(['email' => trans($response)]);
+     }
 }

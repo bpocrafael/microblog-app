@@ -8,7 +8,6 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ConfirmPasswordController;
 
 Route::get('/', [LoginController::class, 'index'])->name('view.login');
 Route::post('/login', [LoginController::class, 'auth'])->name('login.auth');
