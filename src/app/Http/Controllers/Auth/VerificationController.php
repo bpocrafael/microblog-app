@@ -3,21 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Verified;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
 class VerificationController extends Controller
 {
         /**
      * Display the email verification notice.
-     *
-     * @param  Request  $request
-     * @return \Illuminate\View\View
      */
-    public function show(Request $request)
+    public function show(Request $request): View
     {
         return view('auth.verify');
     }
@@ -26,11 +23,8 @@ class VerificationController extends Controller
 
     /**
      * Mark the authenticated user's email address as verified.
-     *
-     * @param  Request  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function verify(Request $request)
+    public function verify(Request $request): RedirectResponse
     {
         if (! $request->hasValidSignature()) {
             abort(403, 'Invalid verification link');
@@ -51,7 +45,7 @@ class VerificationController extends Controller
         return redirect()->route('user.home');
     }
 
-    public function resend(Request $request)
+    public function resend(Request $request): RedirectResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
             return redirect()->route('user.home');
