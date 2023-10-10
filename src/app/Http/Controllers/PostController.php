@@ -7,7 +7,7 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
-    const DESTINATION_PATH = 'public/images';
+    const DESTINATION_PATH = 'public';
 
     public function store(PostRequest $request)
     {
@@ -25,8 +25,6 @@ class PostController extends Controller
         }
 
         $post->save();
-        $returnRoute = $request->input('return_route', 'user.home');
-
-        return redirect()->route($returnRoute);
+        return back()->withInput();
     }
 }
