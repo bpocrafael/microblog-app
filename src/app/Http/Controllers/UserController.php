@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
+use App\Models\Post;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function show(): View
     {
-        return view('user/profile');
+        $posts = Post::latest()->paginate(4);
+        return view('user.profile', ['posts' => $posts]);
     }
 
     public function home(): View
     {
-        return view('user/home');
+        $posts = Post::latest()->paginate(4);
+        return view('user.home', ['posts' => $posts]);
     }
 
     public function logout(): RedirectResponse
