@@ -7,7 +7,7 @@
                 </div>
                 <div class="card-body" style="background-color: #EAF2F8">
                     <input type="hidden" name="return_route" value="{{ Route::currentRouteName() }}">
-                    <form method="POST" action="{{ route('post.create', ['return_route' => Route::currentRouteName()]) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('post.store', ['return_route' => Route::currentRouteName()]) }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group mt-2">
                             <textarea class="form-control" id="content" name="content" rows="5" maxlength="140"></textarea>

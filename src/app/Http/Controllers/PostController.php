@@ -9,7 +9,7 @@ class PostController extends Controller
 {
     const DESTINATION_PATH = 'public/images';
 
-    public function create(PostRequest $request)
+    public function store(PostRequest $request)
     {
         $post = new Post();
         $post->content = $request->input('content');
