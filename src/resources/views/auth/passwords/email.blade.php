@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="vh-100" style="background-color: #023047;">
+<section class="vh-75" style="background-color: #023047;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="card text-white" style="border-radius: 25px; background-color: #34495E;">
                     <div class="card-header" style="border-radius: 20px; background: #FFA902;">{{ __('Reset Password') }}</div>
 
