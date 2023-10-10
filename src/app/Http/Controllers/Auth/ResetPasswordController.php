@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ResetPasswordRequest;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use App\Http\Requests\ResetPasswordRequest;
+
 
 class ResetPasswordController extends Controller
 {
      // Show the password reset form
-     public function showResetForm(Request $request, $token)
+     public function showResetForm(Request $request, $token): View
      {
          return view('auth.passwords.reset', ['token' => $token, 'email' => $request->email]);
      }
- 
+
      // Reset the user's password
-     public function reset(ResetPasswordRequest $request)
+     public function reset(ResetPasswordRequest $request): RedirectResponse
      {
          $response = Password::reset($request->only(
              'email', 'password', 'password_confirmation', 'token'

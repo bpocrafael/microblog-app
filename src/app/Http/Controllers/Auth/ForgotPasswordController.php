@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ResetLinkRequest;
 use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
@@ -15,12 +16,8 @@ class ForgotPasswordController extends Controller
     }
 
     // Send a password reset link to the user
-    public function sendResetLinkEmail(Request $request)
+    public function sendResetLinkEmail(ResetLinkRequest $request)
     {
-        $this->validate($request, [
-            'email' => 'required|email',
-        ]);
-
         $response = Password::sendResetLink($request->only('email'));
 
         return $response === Password::RESET_LINK_SENT
