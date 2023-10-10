@@ -20,7 +20,7 @@
 
     <div class="container my-4">
         <div class="card shadow">
-            <div class="card-header" style="background-color: #2190AE">
+            <div class="card-header mb-2" style="background-color: #2190AE">
                 <h3 class="my-2 text-white">Your Posts</h3>
             </div>
             @include('post.show')
