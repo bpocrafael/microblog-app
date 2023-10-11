@@ -13,11 +13,17 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
+    /**
+     * Show the register form
+     */    
     public function create(): View
     {
         return view('auth/register');
     }
 
+    /**
+     * Create/register a new user
+     */ 
     public function store(RegisterRequest $request): RedirectResponse
     {
         $incomingFields = $request->validated();

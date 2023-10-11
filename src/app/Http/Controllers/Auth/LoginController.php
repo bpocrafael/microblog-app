@@ -9,11 +9,17 @@ use Illuminate\Http\RedirectResponse;
 
 class LoginController extends Controller
 {
+    /**
+     * Show the login form
+     */
     public function index(): View
     {
         return view('auth/login');
     }
 
+    /**
+     * Authenticate user login
+     */
     public function auth(LoginRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
@@ -26,7 +32,7 @@ class LoginController extends Controller
             return redirect()->route('profile.show');
         }
     
-        return redirect()->route('view.login');
+        return redirect()->route('login');
     }
 
 }
