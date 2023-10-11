@@ -24,7 +24,7 @@ class UserController extends Controller
     public function logout(): RedirectResponse
     {
         auth()->logout();
-        return redirect()->route('view.login');
+        return redirect()->route('login');
     }
 
 }
