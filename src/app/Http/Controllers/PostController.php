@@ -29,4 +29,34 @@ class PostController extends Controller
 
         return back()->withInput();
     }
+
+    public function show(Post $post)
+    {
+        return view('post.show', compact('post'));
+    }
+
+    public function edit(Post $post)
+    {
+        return view('post.edit', compact('post'));
+    }
+
+    public function update(PostRequest $request, Post $post)
+    {
+        $update = Post::find($post->id);
+        $update->content = $request->content;
+
+        if($request->image) {
+            $request->validate([
+                'image' => ['required','image']
+            ]);
+            unlink(public_path('storage/images/'.$post->image));
+            $newImage = time().'.'.$request->image->extension();
+            $request->image->move(public_path('storage/images'),$newImage);
+            $update->image = $newImage;
+        }
+
+        $update->update();
+
+        return redirect()->route('post.show', $post->id);
+    }
 }
