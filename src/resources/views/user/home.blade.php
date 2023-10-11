@@ -81,12 +81,12 @@
 
     <div class="row mt-4">
         <div class="col-sm-10 mx-auto">
-            <div class="card border border-warning shadow-lg">
-                <div class="card-header mb-2" style="background-color: #FFA903">
+            <div class="card shadow-lg" style="border: 2px solid #2190AE">
+                <div class="card-header mb-2" style="background-color: #2190AE">
                     <h2 class="my-2 text-white text-center">Microblog Newsfeed</h2>
                 </div>
-                @include('post.show')
-                <div class="card-footer" style="background-color: #FFA903;">
+                @include('post.index')
+                <div class="card-footer" style="background-color: #2190AE;">
                     <div class="d-flex justify-content-center">
                         {{ $posts->links() }}
                     </div>
