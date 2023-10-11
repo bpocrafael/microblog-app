@@ -14,6 +14,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
     Route::get('/home', [UserController::class, 'home'])->name('user.home');
     Route::post('/posts', [PostController::class, 'store'])->name('post.store');
+    Route::get('/post/{post}', [PostController::class, 'show'])->name('post.show');
+    Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+    Route::put('/post/{post}', [PostController::class, 'update'])->name('post.update');
 });
 
 Route::middleware(['guest'])->group(function () {
@@ -34,4 +37,4 @@ Route::middleware(['web'])->group(function () {
     Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
     Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
     Route::get('email/resend',  [VerificationController::class, 'resend'])->name('verification.resend');
-    });
+});
