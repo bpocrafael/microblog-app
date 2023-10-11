@@ -9,14 +9,18 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 
-Route::get('/', [LoginController::class, 'index'])->name('view.login');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/profile/show', [UserController::class, 'show'])->name('profile.show');
+    Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
+    Route::get('/home', [UserController::class, 'home'])->name('user.home');
+    Route::post('/posts', [PostController::class, 'store'])->name('post.store');
+});
+
+Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'auth'])->name('login.auth');
 Route::get('/register', [RegisterController::class, 'create'])->name('register.create');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
-Route::get('/profile/show', [UserController::class, 'show'])->name('profile.show')->middleware('verified');
-Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
-Route::get('/home', [UserController::class, 'home'])->name('user.home');
-Route::post('/posts', [PostController::class, 'store'])->name('post.store');
+
 
 // Password Reset Routes...
 Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
