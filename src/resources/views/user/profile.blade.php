@@ -1,8 +1,8 @@
-@extends('layout.app')
+@extends('layouts.app')
 
 @section('content')
 
-    @include('layout.navbar')
+    @include('layouts.navbar')
     @include('post.create')
 
     <div class="col-sm-4">
