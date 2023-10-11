@@ -19,7 +19,11 @@
                         {{ __('If you did not receive the email') }},
                         <form class="d-inline" method="GET" action="{{ route('verification.resend') }}">
                             @csrf
-                            <button type="submit" class="btn btn-link p-0 m-0 align-baseline text-decoration-none">{{ __('click here to request another') }}</button>.
+                            <div class="form-group">
+                                <label for="email">{{ __('Enter your email') }}</label>
+                                <input type="email" name="email" id="email" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary">{{ __('Resend Verification Email') }}</button>
                         </form>
                     </div>
                 </div>

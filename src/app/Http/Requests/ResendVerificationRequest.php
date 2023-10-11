@@ -13,7 +13,8 @@ class ResendVerificationRequest extends FormRequest
 
     public function rules()
     {
-        return [];
+        return [
+            'email' => 'required|email',
+        ];
     }
 }
-

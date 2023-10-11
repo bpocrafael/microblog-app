@@ -12,17 +12,21 @@ use App\Http\Requests\ResendVerificationRequest;
 
 class VerificationController extends Controller
 {
-     //Display the email verification notice.
-    public function show(Request $request): View
+    /**
+     * Display the email verification notice.
+     */
+    public function show(): View
     {
         return view('auth.verify');
     }
 
     protected static $verify_redirect = '/';
 
-     //Mark the authenticated user's email address as verified.
-
-     public function verify(VerifyRequest $request): RedirectResponse
+    
+    /**
+     * Mark the authenticated user's email address as verified.
+     */
+    public function verify(VerifyRequest $request): RedirectResponse
     {
         if (! $request->hasValidSignature()) {
             abort(403, 'Invalid verification link');
@@ -31,7 +35,7 @@ class VerificationController extends Controller
         $user = $request->user();
 
         if (!$user) {
-            return redirect()->route('view.login');
+            return redirect()->route('login');
         }
 
         if ($user->hasVerifiedEmail()) {
@@ -43,6 +47,9 @@ class VerificationController extends Controller
         return redirect()->route('user.home');
     }
 
+    /**
+     * Resend email; verification.
+     */
     public function resend(ResendVerificationRequest $request): RedirectResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
