@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use Illuminate\View\View;
+use App\Http\Requests\PostRequest;
+use Illuminate\Http\RedirectResponse;
 
 class PostController extends Controller
 {
     const DESTINATION_PATH = '/public/images';
 
-    public function store(PostRequest $request)
+    /**
+     * Store a newly created post.
+     */
+    public function store(PostRequest $request): RedirectResponse
     {
         $post = new Post();
         $post->content = $request->input('content');
@@ -30,17 +35,26 @@ class PostController extends Controller
         return back()->withInput();
     }
 
-    public function show(Post $post)
+    /**
+     * Display the posts.
+     */
+    public function show(Post $post): View
     {
         return view('post.show', compact('post'));
     }
 
-    public function edit(Post $post)
+    /**
+     * Show the form for editing the post.
+     */
+    public function edit(Post $post): View
     {
         return view('post.edit', compact('post'));
     }
 
-    public function update(PostRequest $request, Post $post)
+    /**
+     * Update the post.
+     */
+    public function update(PostRequest $request, Post $post): RedirectResponse
     {
         $update = Post::find($post->id);
         $update->content = $request->content;
