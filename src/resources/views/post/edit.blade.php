@@ -6,7 +6,7 @@
 
     <div class="container my-4">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <div class="card shadow">
                     <div class="card-header" style="background-color: #023047">
                         <h5 class="my-2 text-light">Edit Post</h5>
