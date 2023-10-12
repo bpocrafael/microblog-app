@@ -28,6 +28,8 @@ jobs:
     - uses: php-actions/phpstan@v3
       with:
         path: src/
+        configuration: src/phpstan.neon
+        memory_limit: 256M
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
