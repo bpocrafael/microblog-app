@@ -1,0 +1,39 @@
+name: ci laravel
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  laravel-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Setup PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.1"
+      - uses: actions/checkout@v3
+      - name: Setup and run all commands inside ./src
+        run: |
+          cd ./src &&
+          php -r "file_exists('.env') || copy('.env.example', '.env');" &&
+          composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist &&
+          php artisan key:generate &&
+          chmod -R 777 storage bootstrap/cache &&
+          mkdir -p database &&
+          touch database/database.sqlite &&
+          vendor/bin/phpunit
+      - name: Run php cs fixer for code style
+        run: |
+          cd ./src &&
+          vendor/bin/php-cs-fixer fix --config=./.php-cs-fixer.php --dry-run --show-progress=dots --verbose --diff
+      - name: Run PHPStan for static analysis
+        run: |
+          cd ./src &&
+          vendor/bin/phpstan analyze --memory-limit=2G
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
