@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use Illuminate\View\View;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
@@ -24,15 +25,22 @@ class LoginController extends Controller
     {
         $validatedData = $request->validated();
     
-        if (auth()->attempt([
+        $credentials = [
             'email' => $validatedData['email'],
             'password' => $validatedData['password']
-        ])) {
+        ];
+    
+        if (auth()->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->route('profile.show');
         }
     
-        return redirect()->route('login');
+        $user = User::where('email', $validatedData['email'])->first();
+    
+        if ($user && $user->email_verified_at) {
+            return redirect()->route('login')->with('error', 'Incorrect password. Please try again.');
+        }
+    
+        return redirect()->route('login')->with('error', 'Email is not verified or does not exist.');
     }
-
 }
