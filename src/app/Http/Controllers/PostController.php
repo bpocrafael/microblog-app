@@ -88,4 +88,13 @@ class PostController extends Controller
 
         return redirect()->route('post.show', $post->id);
     }
+
+    /**
+     * Remove/delete post.
+     */
+    public function destroy(Post $post) : RedirectResponse
+    {
+        $post->delete();
+        return redirect()->back();
+    }
 }
