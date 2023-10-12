@@ -17,6 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/post/{post}', [PostController::class, 'show'])->name('post.show');
     Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
     Route::put('/post/{post}', [PostController::class, 'update'])->name('post.update');
+    Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 });
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
