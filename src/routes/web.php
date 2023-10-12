@@ -34,5 +34,5 @@ Route::middleware(['guest'])->group(function () {
     // Email Verification Routes...
     Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
     Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
-    Route::get('email/resend',  [VerificationController::class, 'resend'])->name('verification.resend');
+    Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 });

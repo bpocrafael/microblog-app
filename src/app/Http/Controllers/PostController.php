@@ -9,7 +9,7 @@ use Illuminate\Http\RedirectResponse;
 
 class PostController extends Controller
 {
-    const DESTINATION_PATH = '/public/images';
+    public const DESTINATION_PATH = '/public/images';
 
     /**
      * Store a newly created post.
@@ -61,11 +61,11 @@ class PostController extends Controller
 
         if($request->image) {
             $request->validate([
-                'image' => ['required','image']
+                'image' => ['required','image'],
             ]);
             unlink(public_path('storage/images/'.$post->image));
             $newImage = time().'.'.$request->image->extension();
-            $request->image->move(public_path('storage/images'),$newImage);
+            $request->image->move(public_path('storage/images'), $newImage);
             $update->image = $newImage;
         }
 

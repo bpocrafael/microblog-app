@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
-
     /**
      * Mark the authenticated user's email address as verified.
      */
@@ -25,7 +24,7 @@ class VerificationController extends Controller
     /**
      * Mark the authenticated user's email address as verified.
      */
-     public function verify(Request $request): RedirectResponse
+    public function verify(Request $request): RedirectResponse
     {
         if (! $request->hasValidSignature()) {
             abort(403, 'Invalid verification link');
