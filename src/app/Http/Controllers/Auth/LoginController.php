@@ -33,18 +33,14 @@ class LoginController extends Controller
         if (auth()->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->route('profile.show');
-
-        } else {
-            $user = User::where('email', $validatedData['email'])->first();
-            
-            if ($user && $user->email_verified_at) {
-                return redirect()->route('login')->with('error', 'Incorrect password. Please try again.');
-                
-            } else {
-                return redirect()->route('login')->with('error', 'Email is not verified or does not exist.');
-            }
         }
     
-        return redirect()->route('login');
+        $user = User::where('email', $validatedData['email'])->first();
+    
+        if ($user && $user->email_verified_at) {
+            return redirect()->route('login')->with('error', 'Incorrect password. Please try again.');
+        }
+    
+        return redirect()->route('login')->with('error', 'Email is not verified or does not exist.');
     }
 }
