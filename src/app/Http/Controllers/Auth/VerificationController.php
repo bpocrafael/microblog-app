@@ -34,7 +34,7 @@ class VerificationController extends Controller
         $user = $request->user();
 
         if (!$user) {
-            return redirect()->route('view.login');
+            return redirect()->route('login');
         }
 
         if ($user->hasVerifiedEmail()) {
