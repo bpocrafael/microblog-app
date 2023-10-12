@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
-
     /**
      * Mark the authenticated user's email address as verified.
      */
@@ -20,12 +19,17 @@ class VerificationController extends Controller
         return view('auth.verify');
     }
 
+    /**
+     * The path to redirect to after successful email verification.
+     *
+     * @var string
+     */
     protected static $verify_redirect = '/';
 
     /**
      * Mark the authenticated user's email address as verified.
      */
-     public function verify(Request $request): RedirectResponse
+    public function verify(Request $request): RedirectResponse
     {
         if (! $request->hasValidSignature()) {
             abort(403, 'Invalid verification link');
@@ -51,12 +55,13 @@ class VerificationController extends Controller
      */
     public function resend(ResendVerificationRequest $request): RedirectResponse
     {
-        if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->route('user.home');
+        $user = $request->user();
+
+        if ($user && !$user->hasVerifiedEmail()) {
+            $user->sendEmailVerificationNotification();
+            return back()->with('resent', true);
         }
 
-        $request->user()->sendEmailVerificationNotification();
-
-        return back()->with('resent', true);
+        return redirect()->route('user.home');
     }
 }

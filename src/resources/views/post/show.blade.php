@@ -1,8 +1,8 @@
-@extends('layout.app')
+@extends('layouts.app')
 
 @section('content')
 
-    @include('layout.navbar')
+    @include('layouts.navbar')
 
     <div class="container mt-4">
         <div class="card" style="background-color: #FAF9F6; border: 2px solid #FFA903;">

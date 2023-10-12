@@ -9,7 +9,7 @@ use Illuminate\Http\RedirectResponse;
 
 class PostController extends Controller
 {
-    const DESTINATION_PATH = '/public/images';
+    public const DESTINATION_PATH = 'public/images';
 
     /**
      * Store a newly created post.
@@ -18,15 +18,27 @@ class PostController extends Controller
     {
         $post = new Post();
         $post->content = $request->input('content');
-        $post->user_id = auth()->id();
+        $post->user_id = (int) auth()->id();
 
         $input = $request->all();
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_name = $image->getClientOriginalName();
-            $image->storeAs(self::DESTINATION_PATH, $image_name);
+            $images = $request->file('image');
 
-            $input['image'] = $image_name;
+            if (is_array($images)) {
+                // Handle multiple uploaded files if needed
+                foreach ($images as $image) {
+                    $image_name = $image->getClientOriginalName();
+                    $image->storeAs(self::DESTINATION_PATH, $image_name);
+                }
+            } elseif ($images instanceof \Illuminate\Http\UploadedFile) {
+                // Handle a single uploaded file
+                $image_name = $images->getClientOriginalName();
+                $images->storeAs(self::DESTINATION_PATH, $image_name);
+            }
+
+            if (isset($image_name)) {
+                $input['image'] = $image_name;
+            }
         }
 
         $post->fill($input);
@@ -56,20 +68,23 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post): RedirectResponse
     {
-        $update = Post::find($post->id);
-        $update->content = $request->content;
+        $post->content = $request->input('content');
 
-        if($request->image) {
+        if ($request->hasFile('image')) {
             $request->validate([
-                'image' => ['required','image']
+                'image' => ['required', 'image'],
             ]);
-            unlink(public_path('storage/images/'.$post->image));
-            $newImage = time().'.'.$request->image->extension();
-            $request->image->move(public_path('storage/images'),$newImage);
-            $update->image = $newImage;
+
+            if ($post->image) {
+                unlink(public_path('storage/images/' . $post->image));
+            }
+
+            $newImage = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('storage/images'), $newImage);
+            $post->image = $newImage;
         }
 
-        $update->update();
+        $post->save();
 
         return redirect()->route('post.show', $post->id);
     }
