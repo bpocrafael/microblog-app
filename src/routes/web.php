@@ -13,11 +13,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile/show', [UserController::class, 'show'])->name('profile.show');
     Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
     Route::get('/home', [UserController::class, 'home'])->name('user.home');
-    Route::post('/posts', [PostController::class, 'store'])->name('post.store');
-    Route::get('/post/{post}', [PostController::class, 'show'])->name('post.show');
-    Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
-    Route::put('/post/{post}', [PostController::class, 'update'])->name('post.update');
-    Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
+    Route::resource('posts', PostController::class);
 });
 
 Route::get('/', [LoginController::class, 'index'])->name('login');

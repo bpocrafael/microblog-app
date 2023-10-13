@@ -2,9 +2,9 @@
     @foreach ($posts as $post)
         <div class="card mb-3" style="background-color: #FAF9F6; border: 2px solid #FFA903;">
             <div class="card-header d-flex justify-content-end" style="background-color: #FFA903">
-                <a href="{{ route('post.show', $post->id) }}" class="btn btn-light btn-sm" style="margin-right:10px; height: 30px;">View</a>
-                <a href="{{ route('post.edit', $post->id) }}" class="btn btn-light btn-sm" style="margin-right:10px; height: 30px;">Edit</a>
-                <form action="{{ route('post.destroy', $post->id)}}" method="POST">
+                <a href="{{ route('posts.show', $post->id) }}" class="btn btn-light btn-sm" style="margin-right:10px; height: 30px;">View</a>
+                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-light btn-sm" style="margin-right:10px; height: 30px;">Edit</a>
+                <form action="{{ route('posts.destroy', $post->id)}}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-light btn-sm" style="margin-right:10px; height: 30px;">Delete</button>

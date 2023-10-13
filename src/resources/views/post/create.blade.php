@@ -6,7 +6,7 @@
                     <h5 class="my-2 text-light">Add your post</h5>
                 </div>
                 <div class="card-body" style="background-color: #EAF2F8">
-                    <form method="POST" action="{{ route('post.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group mt-2">
                             <textarea class="form-control" id="content" name="content" rows="5" maxlength="140"></textarea>
