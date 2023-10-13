@@ -30,4 +30,3 @@ migrate_db:
 
 optimize:
     docker compose exec -it backend php artisan optimize:clear
-	
