@@ -19,12 +19,21 @@
     </div>
      
     <div class="ml-auto">
-        <img src="profile.jpg" alt="Profile Picture" width="40" height="40" class="rounded-circle">
-        <span class="text-white mr-2">User Name</span>
-
-        <form action="{{ route('user.logout') }}" method="POST">
-            @csrf
-            <button>Log out</button>
-          </form> 
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <img src="profile.jpg" alt="Profile Picture" width="40" height="40" class="rounded-circle">
+                <li class="nav-item">
+                    <a class="nav-link" href="">Username</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
