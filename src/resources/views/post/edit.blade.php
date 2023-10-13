@@ -12,7 +12,7 @@
                         <h5 class="my-2 text-light">Edit Post</h5>
                     </div>
                     <div class="card-body" style="background-color: #EAF2F8">
-                        <form method="POST" action="{{ route('post.update', $post->id) }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('posts.update', $post->id) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="form-group">
