@@ -17,7 +17,13 @@
             </li>
         </ul>
     </div>
-     
+
+    <form id="search" action="{{ route('search.result') }}" method="GET" class="d-flex align-items-center mx-auto input-group" style="max-width: 300px;">
+        @csrf
+        <input name="query" type="text" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+        <button type="submit" class="btn btn-outline-light" style="min-width: 50px;">Search</button>
+    </form>
+
     <div class="ml-auto">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
