@@ -17,14 +17,29 @@
             </li>
         </ul>
     </div>
-     
-    <div class="ml-auto">
-        <img src="profile.jpg" alt="Profile Picture" width="40" height="40" class="rounded-circle">
-        <span class="text-white mr-2">User Name</span>
 
-        <form action="{{ route('user.logout') }}" method="POST">
-            @csrf
-            <button>Log out</button>
-          </form> 
+    <form id="search" action="{{ route('search.result') }}" method="GET" class="d-flex align-items-center mx-auto input-group" style="max-width: 300px;">
+        @csrf
+        <input name="query" type="text" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+        <button type="submit" class="btn btn-outline-light" style="min-width: 50px;">Search</button>
+    </form>
+
+    <div class="ml-auto">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <img src="profile.jpg" alt="Profile Picture" width="40" height="40" class="rounded-circle">
+                <li class="nav-item">
+                    <a class="nav-link" href="">Username</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
