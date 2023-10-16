@@ -17,9 +17,9 @@ class UserController extends Controller
             $posts = $user->userPosts()->latest()->paginate(4);
         } else {
             $posts = collect();
-    }
+        }
 
-    return view('user.profile', ['posts' => $posts]);
+        return view('user.profile', ['posts' => $posts]);
     }
 
     public function home(): View
