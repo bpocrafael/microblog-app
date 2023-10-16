@@ -13,11 +13,10 @@ class UserController extends Controller
     {
         $user = optional(User::find(auth()->id()));
 
-        if ($user) {
-            $posts = $user->userPosts()->latest()->paginate(4);
-        } else {
-            $posts = collect();
+        if (!$user) {
+            return view('user.profile', ['posts' => collect()]);
         }
+        $posts = $user->userPosts()->latest()->paginate(4);
 
         return view('user.profile', ['posts' => $posts]);
     }
