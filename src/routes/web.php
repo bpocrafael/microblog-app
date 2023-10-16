@@ -14,6 +14,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
     Route::get('/home', [UserController::class, 'home'])->name('user.home');
     Route::resource('posts', PostController::class);
+    Route::get('/settings', [UserController::class, 'settings'])->name('user.settings');
 });
 
 Route::get('/', [LoginController::class, 'index'])->name('login');

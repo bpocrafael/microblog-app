@@ -33,4 +33,9 @@ class UserController extends Controller
         return redirect()->route('login');
     }
 
+    public function settings(): View
+    {
+        return view('user.settings');
+    }
+
 }
