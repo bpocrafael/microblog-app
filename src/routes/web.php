@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
@@ -15,6 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', [UserController::class, 'home'])->name('user.home');
     Route::resource('posts', PostController::class);
     Route::get('/settings', [UserController::class, 'settings'])->name('user.settings');
+    Route::get('/search/result', [SearchController::class, 'search'])->name('search.result');
 });
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
