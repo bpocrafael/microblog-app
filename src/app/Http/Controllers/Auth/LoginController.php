@@ -28,12 +28,12 @@ class LoginController extends Controller
             'email' => $validatedData['email'],
             'password' => $validatedData['password'],
         ];
-    
+
         if (auth()->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->route('profile.show');
         }
-    
+
         return redirect()->route('login')->with('error', 'Incorrect email or password. Please try again.');
     }
 }
