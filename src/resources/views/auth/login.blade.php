@@ -18,13 +18,13 @@
                   </div>
                   @endif
 
-                  <form action="{{ route('login.auth') }}" method="POST" class="mx-1 mx-md-4">
+                  <form id="login-form" action="{{ route('login.auth') }}" method="POST" class="mx-1 mx-md-4">
                     @csrf
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
                         <label class="form-label" for="form3Example3c">Email</label>
-                        <input name="email" type="email" id="form3Example3c" class="form-control" />
+                        <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" placeholder="" autofocus>
                         <!-- Display email validation errors -->
                         @error('email')
                           <div class="text-danger">{{ $message }}</div>
@@ -52,7 +52,7 @@
                     </div>
 
                     <div class="d-flex justify-content-center mx-4 mb-2 mb-lg-4">
-                      <button type="submit" class="btn btn-lg" style="background-color: #FFA903;">Login</button>
+                      <button onclick="preventMultipleSubmissions('login-button')" id="login-button" type="submit" class="btn btn-lg" style="background-color: #FFA903;">Login</button>
                     </div>
 
                   </form>
