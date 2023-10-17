@@ -17,6 +17,13 @@
 
                         {{ __('Before proceeding, please check your email for a verification link.') }}
                         {{ __('If you did not receive the email') }},
+
+                        @error('email')
+                            <div class="alert alert-danger" role="alert">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
                         <form class="d-inline" method="GET" action="{{ route('verification.resend') }}">
                             @csrf
                             <div class="form-group">
