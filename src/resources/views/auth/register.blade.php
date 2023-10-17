@@ -11,7 +11,7 @@
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                   <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                  <form action="{{ route('register.store') }}" method="POST" class="mx-1 mx-md-4">
+                  <form id="register-form" action="{{ route('register.store') }}" method="POST" class="mx-1 mx-md-4">
                     @csrf
 
                     <div class="d-flex flex-row align-items-center mb-4">
@@ -62,14 +62,13 @@
                     </div>
 
                     <div class="d-flex justify-content-center mx-4 mb-2 mb-lg-4">
-                      <button type="submit" class="btn btn-lg" style="background: #FFA902">Register</button>
+                      <button onclick="registerSubmit()" id="register-button" type="button" class="btn btn-lg" style="background: #FFA902">Register</button>
                     </div>
                   </form>
                     
                   <div class="form-check d-flex justify-content-center mb-5">
                     <label class="form-check-label" for="form2Example3">
                       Already have an account? <a href="{{ route('login') }}">Login</a>  
-                      Need to verify account? <a href="{{ route('verification.notice') }}">Resend</a>
                     </label>
                   </div>
                 </div>
