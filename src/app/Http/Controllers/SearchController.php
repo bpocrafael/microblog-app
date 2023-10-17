@@ -2,20 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SearchRequest;
 use App\Services\SearchService;
+use App\Services\UserFollowService;
 use Illuminate\Contracts\View\View;
+use App\Http\Requests\SearchRequest;
 
 class SearchController extends Controller
 {
     /**
-     * Make an instance of SearchController.
+     * @var SearchService
      */
     private $searchService;
 
-    public function __construct(SearchService $searchService)
+    /**
+     * @var UserFollowService
+     */
+    protected $userFollowService;
+
+    public function __construct(SearchService $searchService, UserFollowService $userFollowService)
     {
         $this->searchService = $searchService;
+        $this->userFollowService = $userFollowService;
     }
 
     /**
@@ -26,6 +33,6 @@ class SearchController extends Controller
         $query = $request->input('query');
         $results = $this->searchService->search($query);
 
-        return view('search.results', $results);
+        return view('search.results', $results, ['userFollowService' => $this->userFollowService,]);
     }
 }
