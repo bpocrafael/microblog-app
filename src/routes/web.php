@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
@@ -17,6 +18,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('posts', PostController::class);
     Route::get('/settings', [UserController::class, 'settings'])->name('user.settings');
     Route::get('/search/result', [SearchController::class, 'search'])->name('search.result');
+    Route::post('users/{user}/follow', [FollowerController::class, 'follow'])->name('users.follow');
+    Route::post('users/{user}/unfollow', [FollowerController::class, 'unfollow'])->name('users.unfollow');
 });
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
