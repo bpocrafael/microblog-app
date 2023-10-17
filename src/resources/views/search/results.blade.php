@@ -11,17 +11,39 @@
                 </div>
 
                 <div class="card-body">
-                    @if ($userResults->count() > 0 || $postResults->count() > 0)
-                        @if ($userResults->count() > 0)
+                    @if (!empty($userResults) || !empty($postResults))
+                        @if (!empty($userResults))
                             <h3>Users</h3>
                             <ul class="list-group">
                                 @foreach ($userResults as $user)
-                                    <li class="list-group-item">{{ $user->name }}</li>
+                                    @if(Auth::user() != $user)
+                                        @if($userFollowService->isFollowingExist(Auth::user(), $user))
+                                            <form method="POST" action="{{ route('users.unfollow', $user->id) }}">
+                                                @csrf
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <span>{{ $user->name }}</span>
+                                                    <button type="submit" class="btn btn-danger">Unfollow</button>
+                                                </li>
+                                            </form>
+                                        @else
+                                            <form method="POST" action="{{ route('users.follow', $user->id) }}">
+                                                @csrf
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <span>{{ $user->name }}</span>
+                                                    <button type="submit" class="btn btn-primary">Follow</button>
+                                                </li>
+                                            </form>
+                                        @endif
+                                    @else
+                                        <li class="list-group-item mb-3">
+                                            <span>{{ $user->name }}</span>
+                                        </li>
+                                    @endif
                                 @endforeach
                             </ul>
                         @endif
 
-                        @if ($postResults->count() > 0)
+                        @if (!empty($postResults))
                             <h3>Posts</h3>
                             @foreach ($postResults as $post)
                                 <div class="card mb-3">
