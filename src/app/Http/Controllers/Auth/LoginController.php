@@ -24,7 +24,6 @@ class LoginController extends Controller
     public function auth(LoginRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
-
         $credentials = [
             'email' => $validatedData['email'],
             'password' => $validatedData['password'],
@@ -35,12 +34,6 @@ class LoginController extends Controller
             return redirect()->route('profile.show');
         }
 
-        $user = User::where('email', $validatedData['email'])->first();
-
-        if ($user && $user->email_verified_at) {
-            return redirect()->route('login')->with('error', 'Incorrect password. Please try again.');
-        }
-
-        return redirect()->route('login')->with('error', 'Email is not verified or does not exist.');
+        return redirect()->route('login')->with('error', 'Incorrect email or password. Please try again.');
     }
 }
