@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\View\View;
 use App\Services\UserFollowService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -19,11 +20,9 @@ class UserController extends Controller
 
     public function show(): View
     {
-        $user = User::find(auth()->id());
+        /** @var User $user */
+        $user = auth()->user();
 
-        if (!$user) {
-            return view('user.profile', ['posts' => collect()]);
-        }
         $posts = $user->userPosts()->latest()->paginate(4);
 
         return view('user.profile', ['user' => $user, 'posts' => $posts, 'userFollowService' => $this->userFollowService,]);
@@ -31,15 +30,16 @@ class UserController extends Controller
 
     public function home(): View
     {
-        $user = User::find(auth()->id());
+        /** @var User $user */
+        $user = auth()->user();
 
-        if (!$user) {
-            return view('user.home', ['posts' => collect()]);
-        }
+        $userIds = $user->followings
+            ->pluck('id')
+            ->push(Auth::id());
 
-        $followingIds = $user->followings->pluck('id')->push($user->id);
-
-        $posts = Post::whereIn('user_id', $followingIds)->latest()->paginate(4);
+        $posts = Post::whereIn('user_id', $userIds)
+            ->latest()
+            ->paginate(4);
 
         return view('user.home', ['posts' => $posts]);
     }
