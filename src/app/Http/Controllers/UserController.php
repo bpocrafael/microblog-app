@@ -31,7 +31,16 @@ class UserController extends Controller
 
     public function home(): View
     {
-        $posts = Post::latest()->paginate(4);
+        $user = User::find(auth()->id());
+
+        if (!$user) {
+            return view('user.home', ['posts' => collect()]);
+        }
+
+        $followingIds = $user->followings->pluck('id')->push($user->id);
+
+        $posts = Post::whereIn('user_id', $followingIds)->latest()->paginate(4);
+
         return view('user.home', ['posts' => $posts]);
     }
 
