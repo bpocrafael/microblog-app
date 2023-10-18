@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-
     @include('layouts.navbar')
+    @include('follow.index')
     @include('post.create')
 
     <div class="col-sm-4">
@@ -12,11 +12,16 @@
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                  <p class="card-text">Sample text about user</p>
+                    <p class="card-text">Sample text about the user</p>
                 </div>
-              </div>        
+            </div>
         </div>
     </div>
+
+    
+    @include('follow.followers')
+    @include('follow.followings')
+
 
     <div class="container my-4">
         <div class="card shadow" style="border: 2px solid #2190AE">

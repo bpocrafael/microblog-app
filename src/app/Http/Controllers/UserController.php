@@ -5,20 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\View\View;
+use App\Services\UserFollowService;
 use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
+    protected UserFollowService $userFollowService;
+
+    public function __construct(UserFollowService $userFollowService)
+    {
+        $this->userFollowService = $userFollowService;
+    }
+
     public function show(): View
     {
-        $user = optional(User::find(auth()->id()));
+        $user = User::find(auth()->id());
 
         if (!$user) {
             return view('user.profile', ['posts' => collect()]);
         }
         $posts = $user->userPosts()->latest()->paginate(4);
 
-        return view('user.profile', ['posts' => $posts]);
+        return view('user.profile', ['user' => $user, 'posts' => $posts, 'userFollowService' => $this->userFollowService,]);
     }
 
     public function home(): View
