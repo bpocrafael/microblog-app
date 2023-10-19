@@ -24,7 +24,16 @@
             </div>
             <div class="card-footer d-flex justify-content-between align-items-center">
                 <div class="interaction mt-1">
-                    <a href="#" class="btn btn-sm btn-primary like">Like</a>
+                    <form method="post" action="{{ route('post.like', $post) }}" class="like-form">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-primary like @if($post->isLikedBy(auth()->user())) d-none @endif">Like</button>
+                    </form>
+                    <form method="post" action="{{ route('post.unlike', $post) }}" class="unlike-form">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-sm btn-danger unlike @if(!$post->isLikedBy(auth()->user())) d-none @endif">Unlike</button>
+                    </form>
                     <a href="#" class="btn btn-sm btn-success comment">Comment</a>
                 </div>
                 <div>
