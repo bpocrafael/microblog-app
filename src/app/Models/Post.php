@@ -25,22 +25,11 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * Get the likes associated with this user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function likes(): HasMany
     {
         return $this->hasMany(PostLike::class);
     }
 
-    /**
-     * Check if the post is liked by the given user.
-     *
-     * @param User $user
-     * @return bool
-     */
     public function isLikedBy(User $user): Bool
     {
         return $this->likes->where('user_id', $user->id)->count() > 0;

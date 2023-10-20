@@ -15,21 +15,11 @@ class PostLike extends Model
         'post_id',
     ];
 
-    /**
-    * Get the user associated with the like.
-    *
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-    * Get the post associated with the like.
-    *
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    */
     public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
