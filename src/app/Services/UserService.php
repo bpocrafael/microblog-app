@@ -12,7 +12,7 @@ class UserService
      *
      * @return array<string, mixed>
      */
-    public function getUserProfile(User $user): array
+    public function getUserProfile(): array
     {
         /** @var User $user */
         $user = auth()->user();
@@ -29,7 +29,7 @@ class UserService
      *
      * @return array<string, mixed>
      */
-    public function getUserHomePosts(User $user): array
+    public function getUserHomePosts(): array
     {
         /** @var User $user */
         $user = User::with('followings')

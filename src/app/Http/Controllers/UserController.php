@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\View\View;
 use App\Services\UserService;
 use App\Services\UserFollowService;
@@ -26,15 +25,15 @@ class UserController extends Controller
         $this->userFollowService = $userFollowService;
     }
 
-    public function show(User $user): View
+    public function show(): View
     {
-        $userData = $this->userService->getUserProfile($user);
+        $userData = $this->userService->getUserProfile();
         return view('user.profile', $userData, ['userFollowService' => $this->userFollowService,]);
     }
 
-    public function home(User $user): View
+    public function home(): View
     {
-        $postData = $this->userService->getUserHomePosts($user);
+        $postData = $this->userService->getUserHomePosts();
         return view('user.home', $postData);
     }
 
