@@ -22,7 +22,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('users/{user}/follow', [FollowerController::class, 'follow'])->name('users.follow');
     Route::post('users/{user}/unfollow', [FollowerController::class, 'unfollow'])->name('users.unfollow');
     Route::post('/posts/{post}/like', [LikeController::class, 'like'])->name('post.like');
-    Route::delete('/posts/{post}/unlike', [LikeController::class, 'unlike'])->name('post.unlike');
 
 });
 
