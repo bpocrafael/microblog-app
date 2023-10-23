@@ -17,9 +17,9 @@ class LikeService
             $like->delete();
             return false;
         }
-    
+
         $like->save();
-    
+
         return true;
     }
 }
