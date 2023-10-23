@@ -1,9 +1,9 @@
 $(document).ready(function() {
-    
     $('.like-button').on('click', function() {
         const post_id = $(this).data('post-id');
         const button = $(this);
         const csrfToken = $('meta[name="csrf-token"]').attr('content');
+        const isLiked = button.text() === 'Like';
 
         $.ajax({
             type: 'POST',
@@ -13,11 +13,8 @@ $(document).ready(function() {
                 post_id: post_id
             },
             success: function(response) {
-                if (response.liked) {
-                    button.text('Unlike');
-                } else {
-                    button.text('Like');
-                }
+                const buttonText = isLiked ? 'Unlike' : 'Like';
+                button.text(buttonText);
             }
         });
     });

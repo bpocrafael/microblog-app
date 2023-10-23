@@ -15,6 +15,9 @@ class LikeController extends Controller
         $this->likeService = $likeService;
     }
 
+    /**
+     * Handle a request to like a post.
+     */
     public function like(Request $request): JsonResponse
     {
         $user = auth()->user();
