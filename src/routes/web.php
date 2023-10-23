@@ -5,6 +5,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -22,7 +23,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('users/{user}/follow', [FollowerController::class, 'follow'])->name('users.follow');
     Route::post('users/{user}/unfollow', [FollowerController::class, 'unfollow'])->name('users.unfollow');
     Route::post('/posts/{post}/like', [LikeController::class, 'like'])->name('post.like');
-
+    Route::get('/comments/{post}', [CommentController::class, 'index'])->name('comments.index');
+    Route::post('/comments/{post}', [CommentController::class, 'store'])->name('comments.store');
 });
 
 Route::get('/', [LoginController::class, 'index'])->name('login');

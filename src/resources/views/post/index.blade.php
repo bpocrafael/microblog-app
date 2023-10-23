@@ -32,6 +32,8 @@
                         @endif
                     </button>
                     <a href="#" class="btn btn-sm btn-success comment">Comment</a>
+                    <a href="#" class="btn btn-sm btn-primary like">Like</a>
+                    <a href="{{ route('comments.index', $post->id) }}" class="btn btn-sm btn-success comment">Comment</a>
                 </div>
                 <div>
                     <a href="#" class="btn btn-sm btn-danger share">Share</a>
