@@ -3,27 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Models\Comment;
 use Illuminate\View\View;
+use App\Services\CommentService;
 use App\Http\Requests\CommentRequest;
 use Illuminate\Http\RedirectResponse;
 
 class CommentController extends Controller
 {
-    public function index(Post $post): View
+    /**
+     * @var CommentService
+     */
+    protected $commentService;
+
+    public function __construct(CommentService $commentService)
     {
-        return view('comment.index', ['post' => $post]);
+        $this->commentService = $commentService;
     }
 
+    /**
+     * Display the comments.
+     */
+    public function index(Post $post): View
+    {
+        $comments = $this->commentService->getCommentsForPost($post);
+        return view('comment.index', ['post' => $post, 'comments' => $comments]);
+    }
+
+    /**
+     * Store a newly created comment.
+     */
     public function store(CommentRequest $request, Post $post): RedirectResponse
     {
-        $comment = new Comment();
-        $comment->post_id = $post->id;
-        $comment->content = $request->input('content');
-        $comment->user_id = (int) auth()->id();
-
-        $post->comments()->save($comment);
-
+        $this->commentService->storeComment($request, $post);
         return back()->withInput();
     }
 }
