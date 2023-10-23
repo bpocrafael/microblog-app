@@ -6,21 +6,20 @@ use App\Models\PostLike;
 
 class LikeService
 {
+    /**
+     * Toggle the like status for a user on a post.
+     */
     public function like(int $user_id, int $post_id): bool
     {
-        $like = PostLike::where('user_id', $user_id)
-            ->where('post_id', $post_id)
-            ->first();
+        $like = PostLike::firstOrNew(['user_id' => $user_id, 'post_id' => $post_id]);
 
-        if ($like) {
+        if ($like->exists) {
             $like->delete();
-        } else {
-            PostLike::create([
-                'user_id' => $user_id,
-                'post_id' => $post_id,
-            ]);
+            return false;
         }
-
-        return !$like;
+    
+        $like->save();
+    
+        return true;
     }
 }
