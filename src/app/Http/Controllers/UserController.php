@@ -25,12 +25,18 @@ class UserController extends Controller
         $this->userFollowService = $userFollowService;
     }
 
+    /**
+     * Display the user's posts.
+     */
     public function show(): View
     {
         $userData = $this->userService->getUserProfile();
         return view('user.profile', $userData, ['userFollowService' => $this->userFollowService,]);
     }
 
+    /**
+     * View followed users posts.
+     */
     public function home(): View
     {
         $postData = $this->userService->getUserHomePosts();
