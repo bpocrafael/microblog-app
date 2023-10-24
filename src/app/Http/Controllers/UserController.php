@@ -2,37 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Models\User;
 use Illuminate\View\View;
+use App\Services\UserService;
 use App\Services\UserFollowService;
 use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
-    protected UserFollowService $userFollowService;
+    /**
+     * @var UserService
+     */
+    private $userService;
 
-    public function __construct(UserFollowService $userFollowService)
+    /**
+     * @var UserFollowService
+     */
+    protected $userFollowService;
+
+    public function __construct(UserService $userService, UserFollowService $userFollowService)
     {
+        $this->userService = $userService;
         $this->userFollowService = $userFollowService;
     }
 
+    /**
+     * Display the user's posts.
+     */
     public function show(): View
     {
-        $user = User::find(auth()->id());
-
-        if (!$user) {
-            return view('user.profile', ['posts' => collect()]);
-        }
-        $posts = $user->userPosts()->latest()->paginate(4);
-
-        return view('user.profile', ['user' => $user, 'posts' => $posts, 'userFollowService' => $this->userFollowService,]);
+        $userData = $this->userService->getUserProfile();
+        return view('user.profile', $userData, ['userFollowService' => $this->userFollowService,]);
     }
 
+    /**
+     * View followed users posts.
+     */
     public function home(): View
     {
-        $posts = Post::latest()->paginate(4);
-        return view('user.home', ['posts' => $posts]);
+        $postData = $this->userService->getUserHomePosts();
+        return view('user.home', $postData);
     }
 
     public function logout(): RedirectResponse
@@ -45,5 +53,4 @@ class UserController extends Controller
     {
         return view('user.settings');
     }
-
 }
