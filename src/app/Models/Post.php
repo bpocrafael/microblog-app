@@ -35,4 +35,13 @@ class Post extends Model
         return $this->likes->where('user_id', $user->id)->count() > 0;
     }
 
+    /**
+     * Get the posts associated with this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
