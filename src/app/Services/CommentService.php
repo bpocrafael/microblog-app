@@ -9,11 +9,17 @@ use Illuminate\Database\Eloquent\Collection;
 
 class CommentService
 {
+    /**
+     * Get the comment for post.
+     */
     public function getCommentsForPost(Post $post): Collection
     {
         return $post->comments;
     }
 
+    /**
+     * Store the new created comment.
+     */
     public function storeComment(CommentRequest $request, Post $post): Comment
     {
         $comment = new Comment();
