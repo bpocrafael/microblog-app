@@ -24,7 +24,13 @@
             </div>
             <div class="card-footer d-flex justify-content-between align-items-center">
                 <div class="interaction mt-1">
-                    <a href="#" class="btn btn-sm btn-primary like">Like</a>
+                    <button  class="btn btn-sm btn-primary like-button" data-post-id="{{ $post->id }}">
+                        @if (auth()->check() && $post->isLikedBy(auth()->user()))
+                            Unlike
+                        @else
+                            Like
+                        @endif
+                    </button>
                     <a href="#" class="btn btn-sm btn-success comment">Comment</a>
                 </div>
                 <div>

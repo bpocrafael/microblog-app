@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
@@ -20,6 +21,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/search/result', [SearchController::class, 'search'])->name('search.result');
     Route::post('users/{user}/follow', [FollowerController::class, 'follow'])->name('users.follow');
     Route::post('users/{user}/unfollow', [FollowerController::class, 'unfollow'])->name('users.unfollow');
+    Route::post('/posts/{post}/like', [LikeController::class, 'like'])->name('post.like');
+
 });
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
