@@ -2,8 +2,8 @@ $(document).ready(function() {
     $('.delete-button').click(function(e) {
         e.preventDefault();
 
-        var deleteButton = $(this);
-        var postID = deleteButton.data('post-id');
+        const deleteButton = $(this);
+        const postID = deleteButton.data('post-id');
         const csrfToken = $('meta[name="csrf-token"]').attr('content');
 
         if (confirm('Are you sure you want to delete this post?')) {
