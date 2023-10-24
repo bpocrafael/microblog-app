@@ -23,10 +23,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('users/{user}/follow', [FollowerController::class, 'follow'])->name('users.follow');
     Route::post('users/{user}/unfollow', [FollowerController::class, 'unfollow'])->name('users.unfollow');
     Route::post('/posts/{post}/like', [LikeController::class, 'like'])->name('post.like');
+    Route::get('/profile/{user}', [UserController::class, 'viewProfile'])->name('profile.index');
     Route::get('/comments/{post}', [CommentController::class, 'index'])->name('comments.index');
     Route::post('/comments/{post}', [CommentController::class, 'store'])->name('comments.store');
-    Route::get('/profile/{user}', [UserController::class, 'viewProfile'])->name('profile.index');
-
+    Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+    Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
 });
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
