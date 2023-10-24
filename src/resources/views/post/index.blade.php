@@ -7,7 +7,7 @@
                     <form action="{{ route('posts.destroy', $post->id)}}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-light btn-sm" style="margin-right:10px; height: 30px;">Delete</button>
+                        <button type="button" class="btn btn-light btn-sm delete-button" style="margin-right:10px; height: 30px;" data-post-id="{{ $post->id }}">Delete</button>
                     </form>
                 @endif
                 <a href="{{ route('posts.show', $post->id) }}" class="btn btn-light btn-sm" style="margin-right:10px; height: 30px;">View</a>
@@ -28,8 +28,8 @@
             </div>
             <div class="card-footer d-flex justify-content-between align-items-center">
                 <div class="interaction mt-1">
-                    <button  class="btn btn-sm btn-primary like-button" data-post-id="{{ $post->id }}">
-                        @if (auth()->check() && $post->isLikedBy(auth()->user()))
+                    <button class="btn btn-sm btn-primary like-button" data-post-id="{{ $post->id }}">
+                        @if ($post->isLikedBy(auth()->user()))
                             Unlike
                         @else
                             Like
