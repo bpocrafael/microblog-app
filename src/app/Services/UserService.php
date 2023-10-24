@@ -68,5 +68,5 @@ class UserService
             'posts' => $posts,
             'userFollowService' => $this->userFollowService,
         ];
-    }   
+    }
 }
