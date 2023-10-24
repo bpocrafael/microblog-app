@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\ProfileInformationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -18,7 +19,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
     Route::get('/home', [UserController::class, 'home'])->name('user.home');
     Route::resource('posts', PostController::class);
-    Route::get('/settings', [UserController::class, 'settings'])->name('user.settings');
     Route::get('/search/result', [SearchController::class, 'search'])->name('search.result');
     Route::post('users/{user}/follow', [FollowerController::class, 'follow'])->name('users.follow');
     Route::post('users/{user}/unfollow', [FollowerController::class, 'unfollow'])->name('users.unfollow');
@@ -29,6 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
     Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    Route::resource('profileinfo', ProfileInformationController::class);
 });
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
