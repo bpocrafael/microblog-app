@@ -32,13 +32,21 @@
 
     <div class="container mt-3">
         @foreach($post->comments as $comment)
-        <div class="card shadow-sm mb-2" style="width: 50rem; margin-left:30px" >
-            <div class="card-body">
-                <h4 class="card-title">{{ $comment->user->name }}</h4>
-                <p class="text-secondary small text-xs opacity-75">
-                    <i>{{ $post->updated_at->setTimezone('Asia/Manila')->format('j M Y \a\t g:ia') }}</i>
-                </p>
-                <p class="card-text" style="font-size: 17px;">{{ $comment->content }}</p>
+        <div class="card shadow-sm mb-2" style="width: 50rem; margin-left:30px">
+            <div class="card-body d-flex justify-content-between">
+                <div>
+                    <h4 class="card-title">{{ $comment->user->name }}</h4>
+                    <p class="text-secondary small text-xs opacity-75">
+                        <i>{{ $comment->updated_at->setTimezone('Asia/Manila')->format('j M Y \a\t g:ia') }}</i>
+                    </p>
+                    <p class="card-text" style="font-size: 17px;">{{ $comment->content }}</p>
+                </div>
+                <div>
+                    @if(Auth::check() && $comment->user_id === Auth::user()->id)
+                        <a class="btn btn-sm btn-secondary" href="{{ route('comments.edit', $comment->id) }}">Edit</a>
+                        <button class="btn btn-sm btn-secondary">Delete</button>
+                    @endif
+                </div>
             </div>
         </div>
         @endforeach

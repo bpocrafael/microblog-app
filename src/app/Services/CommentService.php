@@ -30,4 +30,15 @@ class CommentService
 
         return $comment;
     }
+
+    /**
+     * Update the comment.
+     */
+    public function updateComment(CommentRequest $request, Comment $comment): Comment
+    {
+        $comment->content = $request->input('content');
+        $comment->save();
+
+        return $comment;
+    }
 }
