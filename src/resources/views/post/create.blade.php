@@ -6,7 +6,7 @@
                     <h5 class="my-2 text-light">Add your post</h5>
                 </div>
                 <div class="card-body" style="background-color: #EAF2F8">
-                    <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
+                    <form id="create-form" method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group mt-2">
                             <textarea class="form-control" id="content" name="content" rows="5" maxlength="140"></textarea>
@@ -21,9 +21,10 @@
                         </div>
                         @endif
                         <div class="d-grid gap-2 d-md-flex justify-content-end mt-2">
-                            <button type="submit" class="btn text-white" style="background-color: #023047">Create Post</button>
+                            <button onclick="preventMultipleSubmissions('create-button')" id="create-button" type="submit" class="btn text-white" style="background-color: #023047">Create Post</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+        
