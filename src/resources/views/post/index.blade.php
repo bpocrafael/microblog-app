@@ -1,6 +1,6 @@
 <div class="container">
     @foreach ($posts as $post)
-        <div class="card mb-3" style="background-color: #FAF9F6; border: 2px solid #FFA903;">
+        <div class="card mb-2 mx-auto" style="background-color: #FAF9F6; border: 2px solid #FFA903; width: 55rem;">
             <div class="card-header d-flex justify-content-end" style="background-color: #FFA903">
                 @if($post->user_id === auth()->id())
                     <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-light btn-sm" style="margin-right:10px; height: 30px;">Edit</a>
@@ -13,7 +13,11 @@
                 <a href="{{ route('posts.show', $post->id) }}" class="btn btn-light btn-sm" style="margin-right:10px; height: 30px;">View</a>
             </div>
             <div class="card-body">
-                <h3 class="card-title">{{ $post->user->name }}</h3>
+                @if (auth()->check() && $post->user->id === auth()->user()->id)
+                    <a class="card-title text-dark text-decoration-none h3" href="{{ route('profile.show') }}">{{ $post->user->name }}</a>
+                @else
+                    <a class="card-title text-dark text-decoration-none h3" href="{{ route('profile.index', $post->user) }}">{{ $post->user->name }}</a>
+                @endif
                 <p class="text-secondary small text-xs opacity-75">
                     <i>{{ $post->updated_at->setTimezone('Asia/Manila')->format('j M Y \a\t g:ia') }}</i>
                 </p>

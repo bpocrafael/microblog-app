@@ -25,6 +25,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/posts/{post}/like', [LikeController::class, 'like'])->name('post.like');
     Route::get('/comments/{post}', [CommentController::class, 'index'])->name('comments.index');
     Route::post('/comments/{post}', [CommentController::class, 'store'])->name('comments.store');
+    Route::get('/profile/{user}', [UserController::class, 'viewProfile'])->name('profile.index');
+
 });
 
 Route::get('/', [LoginController::class, 'index'])->name('login');

@@ -21,7 +21,7 @@
                                             <form method="POST" action="{{ route('users.unfollow', $user->id) }}">
                                                 @csrf
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <span>{{ $user->name }}</span>
+                                                    <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
                                                     <button type="submit" class="btn btn-danger">Unfollow</button>
                                                 </li>
                                             </form>
@@ -29,14 +29,14 @@
                                             <form method="POST" action="{{ route('users.follow', $user->id) }}">
                                                 @csrf
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <span>{{ $user->name }}</span>
+                                                    <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
                                                     <button type="submit" class="btn btn-primary">Follow</button>
                                                 </li>
                                             </form>
                                         @endif
                                     @else
                                         <li class="list-group-item mb-3">
-                                            <span>{{ $user->name }}</span>
+                                            <a href="{{ route('profile.show') }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
                                         </li>
                                     @endif
                                 @endforeach
