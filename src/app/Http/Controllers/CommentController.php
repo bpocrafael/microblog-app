@@ -50,7 +50,7 @@ class CommentController extends Controller
     /**
      * Update the comment.
      */
-    public function update(CommentRequest $request, Comment $comment)
+    public function update(CommentRequest $request, Comment $comment): RedirectResponse
     {
         $comment = $this->commentService->updateComment($request, $comment);
         return redirect()->route('comments.index', ['post' => $comment->post]);
