@@ -52,7 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function userPosts()
     {
-        return $this->hasMany(Post::class, 'user_id');
+        return $this->hasMany(Post::class, 'user_id', 'id');
     }
 
     /**
@@ -84,5 +84,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(PostLike::class);
     }
-
 }

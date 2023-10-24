@@ -8,6 +8,16 @@ use App\Models\Post;
 class UserService
 {
     /**
+     * @var UserFollowService
+     */
+    private $userFollowService;
+
+    public function __construct(UserFollowService $userFollowService)
+    {
+        $this->userFollowService = $userFollowService;
+    }
+
+    /**
      * Get the user and posts.
      *
      * @return array<string, mixed>
@@ -42,4 +52,21 @@ class UserService
 
         return ['posts' => $posts];
     }
+
+    /**
+     * Get the profile of the clicked user.
+     *
+     * @return array<string, mixed>
+     */
+    public function getProfile(User $user): array
+    {
+        $posts = $user->userPosts()->latest()->paginate(4);
+        return [
+            'user' => $user,
+            'name' => $user->name,
+            'email' => $user->email,
+            'posts' => $posts,
+            'userFollowService' => $this->userFollowService,
+        ];
+    }   
 }

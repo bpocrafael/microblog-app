@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\View\View;
 use App\Services\UserService;
 use App\Services\UserFollowService;
@@ -52,5 +53,14 @@ class UserController extends Controller
     public function settings(): View
     {
         return view('user.settings');
+    }
+
+    /**
+     * View the profile of the specific user.
+     */
+    public function viewProfile(User $user): View
+    {
+        $userData = $this->userService->getProfile($user);
+        return view('profile.index', $userData);
     }
 }
