@@ -2,7 +2,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{{ asset('js/formSubmission.js') }}"></script>
 <script src="{{ asset('js/likeToggle.js') }}"></script>
+<script src="{{ asset('js/deleteButton.js') }}"></script>
+
 <script>
     handleFormSubmission('#login-form', '#login-button');
     handleFormSubmission('#register-form', '#register-button');
+    handleFormSubmission('#create-form', '#create-button');
 </script>
