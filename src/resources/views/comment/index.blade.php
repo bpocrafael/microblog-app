@@ -17,13 +17,13 @@
                 @endif
             </div>
             <div class="card-footer align-items-center">
-                <form action="{{ route('comments.store',$post->id) }}" method="POST" enctype="multipart/form-data">
+                <form id="comment-form" action="{{ route('comments.store',$post->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                 <div class="mb-2" style="width: 48rem;">
                     <textarea name="content" class="fs-6 form-control" rows="1"></textarea>
                 </div>
                 <div>
-                    <button href="#" type="submit" class="btn btn-sm btn-secondary">Post Comment</button>
+                    <button onclick="preventMultipleSubmissions('comment-button')" id="comment-button" type="submit" class="btn btn-sm btn-secondary">Post Comment</button>
                 </div>
             </form>
             </div>

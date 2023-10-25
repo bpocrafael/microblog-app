@@ -8,4 +8,5 @@
     handleFormSubmission('#login-form', '#login-button');
     handleFormSubmission('#register-form', '#register-button');
     handleFormSubmission('#create-form', '#create-button');
+    handleFormSubmission('#comment-form', '#comment-button');
 </script>
