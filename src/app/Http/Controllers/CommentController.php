@@ -55,4 +55,13 @@ class CommentController extends Controller
         $comment = $this->commentService->updateComment($request, $comment);
         return redirect()->route('comments.index', ['post' => $comment->post]);
     }
+
+    /**
+     * Remove/delete comment.
+     */
+    public function destroy(Comment $comment): RedirectResponse
+    {
+        $comment->delete();
+        return redirect()->back();
+    }
 }
