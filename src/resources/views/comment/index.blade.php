@@ -44,7 +44,7 @@
                 <div>
                     @if(Auth::check() && $comment->user_id === Auth::user()->id)
                         <a class="btn btn-sm btn-secondary" href="{{ route('comments.edit', $comment->id) }}">Edit</a>
-                        <button class="btn btn-sm btn-secondary">Delete</button>
+                        <button type="button" class="btn btn-sm btn-secondary delete-button" data-id="{{ $comment->id }}" data-type="comment">Delete</button>
                     @endif
                 </div>
             </div>

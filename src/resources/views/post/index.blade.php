@@ -4,11 +4,7 @@
             <div class="card-header d-flex justify-content-end" style="background-color: #FFA903">
                 @if($post->user_id === auth()->id())
                     <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-light btn-sm" style="margin-right:10px; height: 30px;">Edit</a>
-                    <form action="{{ route('posts.destroy', $post->id)}}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="button" class="btn btn-light btn-sm delete-button" style="margin-right:10px; height: 30px;" data-post-id="{{ $post->id }}">Delete</button>
-                    </form>
+                    <button type="button" class="btn btn-light btn-sm delete-button" style="margin-right:10px; height: 30px;" data-id="{{ $post->id }}" data-type="post">Delete</button>
                 @endif
                 <a href="{{ route('posts.show', $post->id) }}" class="btn btn-light btn-sm" style="margin-right:10px; height: 30px;">View</a>
             </div>
