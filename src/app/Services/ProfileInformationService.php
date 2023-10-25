@@ -17,6 +17,17 @@ class ProfileInformationService
      */
     public function createProfileInformation(User $user, array $data): ProfileInformation
     {
-        return $user->profileInformation()->create($data);
+        $profileInformation = new ProfileInformation($data);
+        $user->profileInformation()->save($profileInformation);
+        return $profileInformation;
     }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function updateProfileInformation(ProfileInformation $profileInformation, array $data): void
+    {
+        $profileInformation->update($data);
+    }
+
 }

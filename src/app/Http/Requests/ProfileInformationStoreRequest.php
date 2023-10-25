@@ -16,9 +16,9 @@ class ProfileInformationStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstname' => 'required',
-            'middlename' => 'nullable',
-            'surname' => 'required',
+            'firstname' => ['nullable', 'min:2', 'max:60'],
+            'middlename' => ['nullable', 'min:2', 'max:60'],
+            'surname' => ['nullable', 'min:2', 'max:60'],
             'image' => 'nullable',
             'about' => 'nullable',
         ];

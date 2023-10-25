@@ -14,21 +14,34 @@
                                 <div class="user-avatar mb-3">
                                     <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" height="250px" width="250px">
                                 </div>
-                                <h5 class="user-name">
-                                    {{ $profileInformation->latest()->value('firstname') }}
-                                    {{ $profileInformation->latest()->value('middlename') ? ' ' . $profileInformation->latest()->value('middlename') : '' }}
-                                    {{ $profileInformation->latest()->value('surname') }}
-                                </h5>
+                                @auth
+                                    @if (auth()->user()->profileInformation)
+                                        <h5 class="user-name">
+                                            {{ auth()->user()->profileInformation->firstname ? ' ' . auth()->user()->profileInformation->firstname : '' }}
+                                            {{ auth()->user()->profileInformation->middlename ? ' ' . auth()->user()->profileInformation->middlename : '' }}
+                                            {{ auth()->user()->profileInformation->surname ? ' ' . auth()->user()->profileInformation->surname : '' }}
+                                        </h5>
+                                    @else
+                                        <p>No profile information available.</p>
+                                    @endif
+                                @endauth
                                 <h6 class="user-email">{{ auth()->user()->email }}</h6>
                             </div>
                             <div class="about">
                                 <h5 class="mb-2 text-primary">About</h5>
-                                <p>{{ $profileInformation->latest()->value('about') }}</p>
+                                @auth
+                                    @if (auth()->user()->profileInformation)
+                                        <p>{{ auth()->user()->profileInformation->about ? ' ' . auth()->user()->profileInformation->about : ''  }}</p>
+                                    @else
+                                        <p>Bio not available.</p>
+                                    @endif
+                                @endauth
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
             <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
                 <div class="card h-100 border border-dark shadow">
                     <div class="card-body">
@@ -41,19 +54,19 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="firstname">First Name</label>
-                                        <input type="text" class="form-control" name="firstname" placeholder="Enter your first name" value="{{ $profileInformation->latest()->value('firstname') }}">
+                                        <input type="text" class="form-control" name="firstname" placeholder="Enter your first name" value="{{ !empty(auth()->user()->profileInformation->firstname) ? auth()->user()->profileInformation->firstname : '' }}">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="middlename">Middle Name</label>
-                                        <input type="text" class="form-control" name="middlename" placeholder="Enter your middle name" value="{{ $profileInformation->latest()->value('middlename') }}">
+                                        <input type="text" class="form-control" name="middlename" placeholder="Enter your middle name" value="{{ !empty(auth()->user()->profileInformation->middlename) ? auth()->user()->profileInformation->middlename : '' }}">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="surname">Surname</label>
-                                        <input type="text" class="form-control" name="surname" placeholder="Enter your surname" value="{{ $profileInformation->latest()->value('surname') }}">
+                                        <input type="text" class="form-control" name="surname" placeholder="Enter your surname" value="{{ !empty(auth()->user()->profileInformation->surname) ? auth()->user()->profileInformation->surname : '' }}">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -65,7 +78,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="about">About</label>
-                                        <textarea class="form-control" name="about" placeholder="Enter anything about you" rows="3" maxlength="140" >{{ $profileInformation->latest()->value('about') }}</textarea>
+                                        <textarea class="form-control" name="about" placeholder="Enter anything about you" rows="3" maxlength="140" ></textarea>
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">

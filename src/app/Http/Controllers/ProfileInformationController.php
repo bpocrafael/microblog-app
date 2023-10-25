@@ -37,8 +37,15 @@ class ProfileInformationController extends Controller
 
         $validatedData = $request->validated();
 
-        $this->profileService->createProfileInformation($user, $validatedData);
+        $profileInformation = $this->profileService->getProfileInformation($user);
 
-        return redirect()->route('profileinfo.create')->with('success', 'Profile created successfully!');
+        $this->profileService->updateProfileInformation($profileInformation, $validatedData);
+
+        if (!$profileInformation->exists) {
+            $this->profileService->createProfileInformation($user, $validatedData);
+        }
+
+        return redirect()->route('profileinfo.create')->with('success', 'Profile updated successfully!');
     }
+
 }
