@@ -7,6 +7,9 @@ use App\Models\ProfileInformation;
 
 class ProfileInformationService
 {
+    /**
+    * Get the profile information for a user or create a new ProfileInformation instance if none exists.
+    */
     public function getProfileInformation(User $user): ProfileInformation
     {
         return $user->profileInformation ?? new ProfileInformation();
