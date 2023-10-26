@@ -36,7 +36,8 @@ class ProfileInformationController extends Controller
     public function store(ProfileInformationStoreRequest $request): RedirectResponse
     {
         try {
-        DB::beginTransaction();
+            DB::beginTransaction();
+
             $user = auth()->user();
 
             $validatedData = $request->validated();
