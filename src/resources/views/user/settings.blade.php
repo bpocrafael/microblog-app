@@ -17,9 +17,7 @@
                                 @auth
                                     @if (auth()->user()->profileInformation)
                                         <h5 class="user-name">
-                                            {{ auth()->user()->profileInformation->firstname ? ' ' . auth()->user()->profileInformation->firstname : '' }}
-                                            {{ auth()->user()->profileInformation->middlename ? ' ' . auth()->user()->profileInformation->middlename : '' }}
-                                            {{ auth()->user()->profileInformation->surname ? ' ' . auth()->user()->profileInformation->surname : '' }}
+                                            {{ auth()->user()->full_name }}
                                         </h5>
                                     @else
                                         <p>No profile information available.</p>

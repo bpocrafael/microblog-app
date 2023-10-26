@@ -91,4 +91,23 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(ProfileInformation::class, 'user_id');
     }
 
+    public function getFullNameAttribute()
+    {
+        $profile = $this->profileInformation;
+
+        if ($profile) {
+            $nameParts = [
+                $profile->firstname,
+                $profile->middlename,
+                $profile->surname,
+            ];
+
+            $fullName = implode(' ', array_filter($nameParts));
+
+            return $fullName ?: 'No profile information available.';
+        }
+
+        return 'No profile information available.';
+    }
+
 }
