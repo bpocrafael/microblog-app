@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 use App\Services\ProfileInformationService;
-use App\Http\Requests\ProfileInformationStoreRequest; // Include the custom request class
+use App\Http\Requests\ProfileInformationStoreRequest;
 use Illuminate\Http\RedirectResponse;
 
 class ProfileInformationController extends Controller
