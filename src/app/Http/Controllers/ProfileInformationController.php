@@ -57,7 +57,7 @@ class ProfileInformationController extends Controller
 
             DB::rollBack();
 
-            return redirect()->route('error')->with('error', 'An error occurred while updating the profile.');
+            return redirect()->route('profile-info.create')->with('error', 'An error occurred while updating the profile.');
         }
     }
 

@@ -13,7 +13,7 @@
                 <a class="nav-link" href="{{ route('user.home') }}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('profileinfo.create') }}">Settings</a>
+                <a class="nav-link" href="{{ route('profile-info.create') }}">Settings</a>
             </li>
         </ul>
     </div>
