@@ -24,7 +24,7 @@ class ProfileInformationService
             $user->profileInformation()->save($profileInformation);
             return $profileInformation;
         }
-    
+
         throw new \InvalidArgumentException("Cannot create profile information without a valid user.");
     }
 

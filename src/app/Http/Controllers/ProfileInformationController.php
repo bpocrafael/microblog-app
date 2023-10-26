@@ -50,7 +50,6 @@ class ProfileInformationController extends Controller
                 $this->profileService->createProfileInformation($user, $validatedData);
             }
 
-
             DB::commit();
 
             return redirect()->route('profileinfo.create')->with('success', 'Profile updated successfully!');
