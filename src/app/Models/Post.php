@@ -13,7 +13,7 @@ class Post extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['content', 'user_id' , 'image'];
+    protected $fillable = ['content', 'user_id', 'image', 'original_post_id' ];
 
     /**
      * Get the posts associated with this user.
@@ -43,5 +43,15 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Get the posts associated with this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function originalPost(): BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'original_post_id');
     }
 }
