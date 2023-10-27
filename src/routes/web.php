@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ShareController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowerController;
@@ -30,6 +31,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     Route::resource('profile-info', ProfileInformationController::class);
+    Route::get('/posts/{post}/share', [ShareController::class, 'index'])->name('share.index');
+    Route::post('/home', [ShareController::class, 'store'])->name('share.store');
 });
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
