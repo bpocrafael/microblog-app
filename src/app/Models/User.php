@@ -5,10 +5,11 @@ namespace App\Models;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -84,4 +85,29 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(PostLike::class);
     }
+
+    public function profileInformation(): HasOne
+    {
+        return $this->hasOne(ProfileInformation::class, 'user_id');
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        $profile = $this->profileInformation;
+
+        if ($profile) {
+            $nameParts = [
+                $profile->firstname,
+                $profile->middlename,
+                $profile->surname,
+            ];
+
+            $fullName = implode(' ', array_filter($nameParts));
+
+            return $fullName ?: 'No information available.';
+        }
+
+        return 'No information available.';
+    }
+
 }
