@@ -20,16 +20,20 @@
                 @if ($post->image)
                     <img height="250px" width="150px" src="{{ asset('/storage/images/'.$post->image) }}" alt="Post Image" class="img-fluid">
                 @endif
+                <span class="like-count" data-post-id="{{ $post->id }}">
+                    {{ $post->likes->count() === 0 ? '' : $post->likes->count() . ' ' . ($post->likes->count() === 1 ? 'Like' : 'Likes') }}
+                </span>
             </div>
             <div class="card-footer d-flex justify-content-between align-items-center">
                 <div class="interaction mt-1">
-                    <button class="btn btn-sm btn-primary like-button" data-post-id="{{ $post->id }}">
+                    <button class="btn btn-sm btn-primary like-button" data-post-id="{{ $post->id }}" data-initial-likes="{{ $post->likes->count() }}">
                         @if ($post->isLikedBy(auth()->user()))
                             Unlike
                         @else
                             Like
                         @endif
                     </button>
+                    
                     <a href="#" class="btn btn-sm btn-success comment">Comment</a>
                 </div>
                 <div>
