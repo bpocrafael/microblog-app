@@ -30,10 +30,7 @@
                     {{ $post->likes->count() === 0 ? '' : $post->likes->count() . ' ' . ($post->likes->count() === 1 ? 'Like' : 'Likes') }}
                 </span>
                 @if ($post->original_post_id)
-                    @php
-                        $originalPost = $post->originalPost
-                    @endphp
-                    @if ($originalPost)
+                    @if ($originalPost = $post->originalPost)
                     <div class="d-flex justify-content-center align-items-center mb-3 border" style="background-color: #FFFFFF;">
                         <div class="card-body">
                         <h3 class="card-text" style="font-size: 20px;">{{ $originalPost->user->name }}</h3>

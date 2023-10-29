@@ -32,7 +32,7 @@ class UserController extends Controller
     public function show(): View
     {
         $userData = $this->userService->getUserProfile();
-        return view('user.profile', $userData, ['userFollowService' => $this->userFollowService,]);
+        return view('user.profile', $userData, ['userFollowService' => $this->userFollowService]);
     }
 
     /**

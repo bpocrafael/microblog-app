@@ -45,12 +45,14 @@ class UserService
         $user = User::with('followings')
             ->find(auth()->id());
 
-        $posts = Post::with('user')
+        $posts = Post::with('originalPost', 'user')
             ->whereIn('user_id', $user->followings->pluck('id')->push($user->id))
             ->latest()
             ->paginate(4);
 
-        return ['posts' => $posts];
+        $originalPost = null;
+
+        return ['posts' => $posts, 'originalPost' => $originalPost];
     }
 
     /**
