@@ -12,22 +12,12 @@ class SearchService
      *
      * @return array<string, mixed>
      */
-    public function search(string $query)
+    public function search(string $query): array
     {
         $userResults = User::where('name', 'like', "%$query%")->get();
-        $searchWords = explode(' ', $query);
-        $postResults = [];
-
-        foreach ($searchWords as $word) {
-            $posts = Post::where('content', 'like', "% $word %")
-                         ->orWhere('content', 'like', "$word %")
-                         ->orWhere('content', 'like', "% $word")
-                         ->orWhere('content', 'like', $word)
-                         ->get();
-
-            $postResults = array_merge($postResults, $posts->all());
-        }
-
+        $postResults = Post::whereRaw("content REGEXP '[[:<:]]" . $query . "[[:>:]]'")->get();
+        
         return compact('userResults', 'postResults');
     }
 }
+ 
