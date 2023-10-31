@@ -9,11 +9,11 @@
                 <div class="card-header mb-2" style="background-color: #2190AE">
                     <h2 class="my-2 text-white text-center">Search Results</h2>
                 </div>
-
                 <div class="card-body">
-                    @if (!empty($userResults) || !empty($postResults))
-                        @if (!empty($userResults))
-                            <h3>Users</h3>
+                    @if (count($userResults) === 0 && count($postResults) === 0)
+                        <p class="text-center">No results found.</p>
+                    @else
+                        @if (count($userResults) > 0)
                             <ul class="list-group">
                                 @foreach ($userResults as $user)
                                     @if(Auth::user() != $user)
@@ -26,7 +26,7 @@
                                                 </li>
                                             </form>
                                         @else
-                                            <form method="POST" action="{{ route('users.follow', $user->id) }}">
+                                            <form method="POST" action="{{ route('users.follow', $user->id) }}>
                                                 @csrf
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                                     <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
@@ -42,20 +42,16 @@
                                 @endforeach
                             </ul>
                         @endif
-
-                        @if (!empty($postResults))
-                            <h3>Posts</h3>
+                        @if (count($postResults) > 0)
                             @foreach ($postResults as $post)
                                 <div class="card mb-3">
                                     <div class="card-body">
-                                        <h5 class="card-title">Post by {{ $post->user->name }}</h5>
+                                        <h5 class="card-title">{{ $post->user->name }}</h5>
                                         <p class="card-text">{{ $post->content }}</p>
                                     </div>
                                 </div>
                             @endforeach
                         @endif
-                    @else
-                        <p>No results found.</p>
                     @endif
                 </div>
             </div>
