@@ -16,8 +16,7 @@ class SearchService
     {
         $userResults = User::where('name', 'like', "%$query%")->get();
         $postResults = Post::whereRaw("content REGEXP '[[:<:]]" . $query . "[[:>:]]'")->get();
-        
+
         return compact('userResults', 'postResults');
     }
 }
- 
