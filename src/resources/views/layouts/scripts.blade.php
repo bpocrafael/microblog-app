@@ -3,6 +3,7 @@
 <script src="{{ asset('js/formSubmission.js') }}"></script>
 <script src="{{ asset('js/likeToggle.js') }}"></script>
 <script src="{{ asset('js/deleteButton.js') }}"></script>
+<script src="{{ asset('js/follow-unfollowButton') }}"></script>
 
 <script>
     handleFormSubmission('#login-form', '#login-button');
