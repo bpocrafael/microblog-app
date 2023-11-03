@@ -19,8 +19,8 @@ class ProfileInformationStoreRequest extends FormRequest
             'firstname' => ['nullable', 'min:2', 'max:60'],
             'middlename' => ['nullable', 'min:2', 'max:60'],
             'surname' => ['nullable', 'min:2', 'max:60'],
-            'image' => 'nullable',
-            'about' => 'nullable',
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+            'about' => ['nullable', 'max:140'],
         ];
     }
 }

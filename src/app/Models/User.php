@@ -104,10 +104,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
             $fullName = implode(' ', array_filter($nameParts));
 
-            return $fullName ?: 'No information available.';
+            if (!empty($fullName)) {
+                return $fullName;
+            }
         }
-
-        return 'No information available.';
+        return $this->name ?: 'No information available.';
     }
-
 }

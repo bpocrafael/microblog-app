@@ -10,13 +10,24 @@
                                 style="width: 180px; border-radius: 10px;">
                         </div>
                         <div class="flex-grow-1 ms-3">
-                            <h5 class="mb-1">User Name</h5>
-                            <p class="mb-2 pb-1" style="color: #2b2a2a;">email@email.com</p>
-                            <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
-                                style="background-color: #efefef;">
-                                <div>
-                                    <p class="small text-muted mb-1">Short bio of the user will be displayed in this section</p>
-                                </div>
+                            @auth
+                                @if (auth()->user()->profileInformation)
+                                    <h5 class="user-name">
+                                        {{ auth()->user()->full_name }}
+                                    </h5>
+                                @else
+                                    <h5>{{ auth()->user()->name }}</h5>
+                                @endif
+                            @endauth
+                            <p class="small user-email mb-2 pb-1" style="color: #2b2a2a;">{{ auth()->user()->email }}</p>
+                            <div>
+                                @auth
+                                @if (auth()->user()->profileInformation)
+                                    <p class="text-muted mb-3">{{ auth()->user()->profileInformation->about ? ' ' . auth()->user()->profileInformation->about : ''  }}</p>
+                                @else
+                                    <p class="text-muted mb-3">Bio not available.</p>
+                                @endif
+                            @endauth
                             </div>
                             <div class="d-flex pt-1">
                                 <button type="button" class="btn btn-outline-light me-1 flex-grow-1" data-bs-toggle="modal" data-bs-target="#followersModal">Followers</button>
