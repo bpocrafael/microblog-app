@@ -3,42 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 
 class FollowerController extends Controller
 {
     /**
-     * Follow user.
+     * Handle follow users
      */
-    public function follow(User $user): RedirectResponse
+    public function follow(User $user): JsonResponse
     {
-        /** @var User $user */
         $follower = auth()->user();
 
-        if (!$follower) {
-            return redirect()->route('login');
+        if ($follower) {
+            $follower->followings()->attach($user);
+            return response()->json(['message' => 'You are now following ' . $user->name]);
         }
 
-        $follower->followings()->syncWithoutDetaching($user);
-
-        return redirect()->route('search.result', $user->id);
-
+        return response()->json(['error' => 'User is not authenticated'], 401);
     }
 
     /**
-     * Unfollow user.
-     */
-    public function unfollow(User $user): RedirectResponse
+     * Handle unfollow users
+    */
+    public function unfollow(User $user): JsonResponse
     {
-        /** @var User $user */
         $follower = auth()->user();
 
-        if (!$follower) {
-            return redirect()->route('login');
+        if ($follower) {
+            $follower->followings()->detach($user);
+            return response()->json(['message' => 'You have unfollowed ' . $user->name]);
         }
 
-        $follower->followings()->detach($user);
-
-        return redirect()->route('search.result', $user->id);
+        return response()->json(['error' => 'User is not authenticated'], 401);
     }
+
 }
