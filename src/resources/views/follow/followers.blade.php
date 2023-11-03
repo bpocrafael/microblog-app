@@ -9,15 +9,14 @@
                 <ul class="list-group">
                     @foreach ($user->followers as $follower)
                         @if (Auth::user() && $follower->id !== Auth::user()->id)
-                            <form method="POST" action="{{ $userFollowService->isFollowingExist(Auth::user(), $follower) ? route('users.unfollow', $follower->id) : route('users.follow', $follower->id) }}">
-                                @csrf
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span>{{ $follower->name }}</span>
-                                    <button type="submit" class="btn btn-{{ $userFollowService->isFollowingExist(Auth::user(), $follower) ? 'danger' : 'primary' }}">
-                                        {{ $userFollowService->isFollowingExist(Auth::user(), $follower) ? 'Unfollow' : 'Follow' }}
-                                    </button>
-                                </li>
-                            </form>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>{{ $follower->name }}</span>
+                                @if ($userFollowService->isFollowingExist(Auth::user(), $follower))
+                                    <button class="toggle-button btn btn-danger btn-sm mt-2" data-user="{{ $follower->id }}" data-action="unfollow">Unfollow</button>
+                                @else
+                                    <button class="toggle-button btn btn-primary btn-sm mt-2" data-user="{{ $follower->id }}" data-action="follow">Follow</button>
+                                @endif
+                            </li>
                         @else
                             <li class="list-group-item mb-3">
                                 <span>{{ $follower->name }}</span>
@@ -26,6 +25,7 @@
                     @endforeach
                 </ul>
             </div>
+            
         </div>
     </div>
 </div>

@@ -9,15 +9,14 @@
                 <ul class="list-group">
                     @foreach ($user->followings as $following)
                         @if (Auth::user() && $following->id !== Auth::user()->id)
-                            <form method="POST" action="{{ $userFollowService->isFollowingExist(Auth::user(), $following) ? route('users.unfollow', $following->id) : route('users.follow', $following->id) }}">
-                                @csrf
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span>{{ $following->name }}</span>
-                                    <button type="submit" class="btn btn-{{ $userFollowService->isFollowingExist(Auth::user(), $following) ? 'danger' : 'primary' }}">
-                                        {{ $userFollowService->isFollowingExist(Auth::user(), $following) ? 'Unfollow' : 'Follow' }}
-                                    </button>
-                                </li>
-                            </form>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>{{ $following->name }}</span>
+                                @if ($userFollowService->isFollowingExist(Auth::user(), $following))
+                                    <button class="toggle-button btn btn-danger btn-sm mt-2" data-user="{{ $following->id }}" data-action="unfollow">Unfollow</button>
+                                @else
+                                    <button class="toggle-button btn btn-primary btn-sm mt-2" data-user="{{ $following->id }}" data-action="follow">Follow</button>
+                                @endif
+                            </li>
                         @else
                             <li class="list-group-item mb-3">
                                 <span>{{ $following->name }}</span>
