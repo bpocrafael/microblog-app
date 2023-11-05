@@ -25,7 +25,7 @@ class ShareController extends Controller
      */
     public function index(Post $post): View
     {
-        $originalPost = $this->shareService->getOriginalPost($post);
+        $originalPost = $this->shareService->getOriginalPost($post->original_post_id);
         return view('share.index', compact('post', 'originalPost'));
     }
 

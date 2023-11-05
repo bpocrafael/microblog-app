@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Http\Requests\ShareRequest;
 use App\Models\Post;
+use App\Http\Requests\ShareRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ShareService
 {
@@ -12,43 +13,35 @@ class ShareService
      */
     public function storeSharePost(ShareRequest $request): Post
     {
-        $originalPost = $this->getOriginalPostById((int) $request->input('original_post_id'));
+        $originalPostId = $request->input('original_post_id');
+        $originalPost = $this->getOriginalPost($originalPostId);
 
-        while ($originalPost && $originalPost->original_post_id) {
-            $originalPost = Post::find($originalPost->original_post_id);
+        while ($originalPost instanceof Post && $originalPost->original_post_id) {
+            $originalPost = $this->getOriginalPost($originalPost->original_post_id);
         }
-
         $post = new Post();
         $post->content = $request->input('content');
-        $post->user_id = (int) auth()->id();
 
-        if (!$originalPost instanceof Post) {
-            $post->original_post_id = null;
-        } else {
-            $post->original_post_id = $originalPost->id;
-        }
+        /**
+         * @var int $userId
+         */
+        $userId = auth()->id();
+        $post->user_id = $userId;
+        $post->original_post_id = $originalPost instanceof Post ? $originalPost->id : null;
 
         $post->save();
         return $post;
     }
 
     /**
-     * View the post that will be shared.
-     */
-    public function getOriginalPost(Post $post): ?Post
-    {
-        if (!$post->original_post_id) {
-            return null;
-        }
-
-        return $this->getOriginalPostById($post->original_post_id);
-    }
-
-    /**
      * Retrieve the original post by ID.
      */
-    private function getOriginalPostById(int $originalPostId): ?Post
+    public function getOriginalPost(?int $originalPostId): ?Post
     {
-        return Post::find($originalPostId);
+        try {
+            return Post::findOrFail($originalPostId);
+        } catch (ModelNotFoundException $e) {
+            return null;
+        }
     }
 }
