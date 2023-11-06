@@ -4,7 +4,12 @@
             <div class="card-header d-flex justify-content-end" style="background-color: #FFA903">
                 @if($post->user_id === auth()->id())
                     <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-light btn-sm" style="margin-right:10px; height: 30px;">Edit</a>
-                    <button type="button" class="btn btn-light btn-sm delete-button" style="margin-right:10px; height: 30px;" data-id="{{ $post->id }}" data-type="post">Delete</button>
+                    <button type="button" class="btn btn-light btn-sm delete-button" 
+                    style="margin-right:10px; height: 30px;" 
+                    data-id="{{ $post->id }}" 
+                    data-type="post" data-bs-toggle="modal">
+                    Delete
+                    </button>
                 @endif
                 <a href="{{ route('posts.show', $post->id) }}" class="btn btn-light btn-sm" style="margin-right:10px; height: 30px;">View</a>
             </div>
@@ -43,3 +48,5 @@
         </div>
     @endforeach
 </div>
+
+@include('post.delete-confirmation')
