@@ -17,22 +17,16 @@
                             <ul class="list-group">
                                 @foreach ($userResults as $user)
                                     @if(Auth::user() != $user)
-                                        @if($userFollowService->isFollowingExist(Auth::user(), $user))
-                                            <form method="POST" action="{{ route('users.unfollow', $user->id) }}">
-                                                @csrf
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
-                                                    <button type="submit" class="btn btn-danger">Unfollow</button>
-                                                </li>
-                                            </form>
+                                        @if ($userFollowService->isFollowingExist(auth()->user(), $user))
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
+                                                <button class="toggle-button btn btn-danger btn-sm mt-2" data-user="{{ $user->id }}" data-action="unfollow">Unfollow</button>
+                                            </li>
                                         @else
-                                            <form method="POST" action="{{ route('users.follow', $user->id) }}>
-                                                @csrf
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
-                                                    <button type="submit" class="btn btn-primary">Follow</button>
-                                                </li>
-                                            </form>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
+                                                <button class="toggle-button btn btn-primary btn-sm mt-2" data-user="{{ $user->id }}" data-action="follow">Follow</button>
+                                            </li>
                                         @endif
                                     @else
                                         <li class="list-group-item mb-3">

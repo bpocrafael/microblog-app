@@ -3,42 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 
 class FollowerController extends Controller
 {
     /**
-     * Follow user.
+     * Handle follow users
      */
-    public function follow(User $user): RedirectResponse
+    public function follow(User $user): JsonResponse
     {
-        /** @var User $user */
         $follower = auth()->user();
 
-        if (!$follower) {
-            return redirect()->route('login');
+        if ($follower) {
+            $follower->followings()->attach($user);
+            return response()->json([
+                'status' => 0,
+                'message' => 'Success. You are now following ' . $user->name,
+                'data' => [],
+            ]);
         }
 
-        $follower->followings()->syncWithoutDetaching($user);
-
-        return redirect()->route('search.result', $user->id);
-
+        return response()->json([
+            'status' => 1,
+            'error' => 'User is not authenticated',
+        ], 401);
     }
 
     /**
-     * Unfollow user.
-     */
-    public function unfollow(User $user): RedirectResponse
+     * Handle unfollow users
+    */
+    public function unfollow(User $user): JsonResponse
     {
-        /** @var User $user */
         $follower = auth()->user();
 
-        if (!$follower) {
-            return redirect()->route('login');
+        if ($follower) {
+            $follower->followings()->detach($user);
+            return response()->json([
+                'status' => 0,
+                'message' => 'Success. You are no longer following ' . $user->name,
+                'data' => [],
+            ]);
         }
 
-        $follower->followings()->detach($user);
-
-        return redirect()->route('search.result', $user->id);
+        return response()->json([
+            'status' => 1,
+            'error' => 'User is not authenticated',
+        ], 401);
     }
+
 }

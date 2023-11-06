@@ -20,15 +20,9 @@
                                     <div>
                                         @if (auth()->check() && auth()->user()->id !== $user->id)
                                             @if ($userFollowService->isFollowingExist(auth()->user(), $user))
-                                                <form method="POST" action="{{ route('users.unfollow', $user->id) }}">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger btn-sm mt-2">Unfollow</button>
-                                                </form>
+                                                <button class="toggle-button btn btn-danger btn-sm mt-2" data-user="{{ $user->id }}" data-action="unfollow">Unfollow</button>
                                             @else
-                                                <form method="POST" action="{{ route('users.follow', $user->id) }}">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-primary btn-sm mt-2">Follow</button>
-                                                </form>
+                                                <button class="toggle-button btn btn-primary btn-sm mt-2" data-user="{{ $user->id }}" data-action="follow">Follow</button>
                                             @endif
                                         @endif
                                     </div>
