@@ -16,10 +16,17 @@ class FollowerController extends Controller
 
         if ($follower) {
             $follower->followings()->attach($user);
-            return response()->json(['message' => 'You are now following ' . $user->name]);
+            return response()->json([
+                'status' => 0,
+                'message' => 'Success. You are now following ' . $user->name,
+                'data' => [],
+            ]);
         }
 
-        return response()->json(['error' => 'User is not authenticated'], 401);
+        return response()->json([
+            'status' => 1,
+            'error' => 'User is not authenticated',
+        ], 401);
     }
 
     /**
@@ -31,10 +38,17 @@ class FollowerController extends Controller
 
         if ($follower) {
             $follower->followings()->detach($user);
-            return response()->json(['message' => 'You have unfollowed ' . $user->name]);
+            return response()->json([
+                'status' => 0,
+                'message' => 'Success. You are no longer following ' . $user->name,
+                'data' => [],
+            ]);
         }
 
-        return response()->json(['error' => 'User is not authenticated'], 401);
+        return response()->json([
+            'status' => 1,
+            'error' => 'User is not authenticated',
+        ], 401);
     }
 
 }
