@@ -23,7 +23,6 @@ $(document).ready(function () {
                 _token: csrfToken,
             },
             success: function () {
-                // Remove the card after successful deletion.
                 $('.delete-button[data-id="' + deleteId + '"]').closest('.card').remove();
                 $('#dModal').modal('hide');
             },
@@ -33,7 +32,6 @@ $(document).ready(function () {
         });
     });
 
-    // Clear the deleteId and deleteType variables when the modal is hidden.
     $('#dModal').on('hidden.bs.modal', function () {
         deleteId = null;
         deleteType = null;
