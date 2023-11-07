@@ -50,9 +50,7 @@ class UserService
             ->latest()
             ->paginate(4);
 
-        $originalPost = null;
-
-        return ['posts' => $posts, 'originalPost' => $originalPost];
+        return ['posts' => $posts, 'originalPost' => null];
     }
 
     /**
