@@ -26,6 +26,19 @@
                 @if ($post->image)
                     <img height="250px" width="150px" src="{{ asset('/storage/images/'.$post->image) }}" alt="Post Image" class="img-fluid">
                 @endif
+                @if ($post->original_post_id)
+                    @if ($originalPost = $post->originalPost)
+                    <div class="d-flex justify-content-center align-items-center mb-3 border" style="background-color: #FFFFFF;">
+                        <div class="card-body">
+                        <h3 class="card-text" style="font-size: 20px;">{{ $originalPost->user->name }}</h3>
+                        <p class="card-text" style="font-size: 20px;">{{ $originalPost->content }}</p>
+                        @if ($originalPost->image)
+                                <img height="250px" width="150px" src="{{ asset('/storage/images/'.$originalPost->image) }}" alt="Original Post Image" class="img-fluid">
+                        @endif
+                        </div>
+                    </div>
+                    @endif
+                @endif
                 <span class="like-count" data-post-id="{{ $post->id }}">
                     {{ $post->likes->count() === 0 ? '' : $post->likes->count() . ' ' . ($post->likes->count() === 1 ? 'Like' : 'Likes') }}
                 </span>
@@ -42,7 +55,7 @@
                     <a href="{{ route('comments.index', $post->id) }}" class="btn btn-sm btn-success comment">Comment</a>
                 </div>
                 <div>
-                    <a href="#" class="btn btn-sm btn-danger share">Share</a>
+                    <a href="{{ route('share.index', ['post' => $post]) }}" class="btn btn-sm btn-danger share">Share</a>
                 </div>
             </div>
         </div>
