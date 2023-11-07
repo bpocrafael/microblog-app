@@ -57,7 +57,7 @@
                   </form>
                 </div>
                 <div class="col-md-8 col-lg-3 col-xl-5 d-flex align-items-center justify-content-end order-1 order-lg-2">
-                  <img src="{{ asset('assets/images/icon.png') }}" class="img-fluid mr-20" alt="Microblog" style="width: 450px; height: auto;">
+                  <img src="{{ asset('assets/images/icon.webp') }}" class="img-fluid mr-20" alt="Microblog" style="width: 450px; height: auto;">
                 </div>
               </div>
             </div>

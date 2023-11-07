@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg sticky-top navbar-light p-3 shadow-sm" style="background-color: #6fb3b8;">
   <div class="container">
     <a class="navbar-brand" href="#">
-      <img src="{{ asset('assets/images/letter-m.png') }}" alt="Bootstrap" width="35" height="35">
+      <img src="{{ asset('assets/images/letter-m.webp') }}" alt="Bootstrap" width="35" height="35">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
