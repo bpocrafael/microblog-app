@@ -14,6 +14,7 @@ class ShareRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'original_post_id' => 'required',
             'content' => 'nullable',
         ];
     }

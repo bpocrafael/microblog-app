@@ -26,9 +26,6 @@
                 @if ($post->image)
                     <img height="250px" width="150px" src="{{ asset('/storage/images/'.$post->image) }}" alt="Post Image" class="img-fluid">
                 @endif
-                <span class="like-count" data-post-id="{{ $post->id }}">
-                    {{ $post->likes->count() === 0 ? '' : $post->likes->count() . ' ' . ($post->likes->count() === 1 ? 'Like' : 'Likes') }}
-                </span>
                 @if ($post->original_post_id)
                     @if ($originalPost = $post->originalPost)
                     <div class="d-flex justify-content-center align-items-center mb-3 border" style="background-color: #FFFFFF;">
@@ -42,6 +39,9 @@
                     </div>
                     @endif
                 @endif
+                <span class="like-count" data-post-id="{{ $post->id }}">
+                    {{ $post->likes->count() === 0 ? '' : $post->likes->count() . ' ' . ($post->likes->count() === 1 ? 'Like' : 'Likes') }}
+                </span>
             </div>
             <div class="card-footer d-flex justify-content-between align-items-center">
                 <div class="interaction mt-1">

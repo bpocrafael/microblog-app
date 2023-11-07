@@ -13,23 +13,19 @@ class ShareService
      */
     public function storeSharePost(ShareRequest $request): Post
     {
-        $originalPostId = $request->input('original_post_id');
-        $originalPost = $this->getOriginalPost($originalPostId);
+        $validated = $request->safe()->all();
+        $originalPost = $this->getOriginalPost($validated['original_post_id']);
 
-        while ($originalPost instanceof Post && $originalPost->original_post_id) {
+        while ($originalPost && $originalPost->original_post_id) {
             $originalPost = $this->getOriginalPost($originalPost->original_post_id);
         }
-        $post = new Post();
-        $post->content = $request->input('content');
 
-        /**
-         * @var int $userId
-         */
-        $userId = auth()->id();
-        $post->user_id = $userId;
-        $post->original_post_id = $originalPost instanceof Post ? $originalPost->id : null;
+        $post = Post::create([
+            'content' => $validated['content'],
+            'user_id' => auth()->id(),
+            'original_post_id' => $originalPost->id ?? null,
+        ]);
 
-        $post->save();
         return $post;
     }
 
