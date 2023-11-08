@@ -4,17 +4,20 @@ $('.toggle-button').click(function() {
     const csrfToken = $('meta[name="csrf-token"]').attr('content');
     const isUserFollowed = button.hasClass('btn-danger');
 
+    const action = isUserFollowed ? 'unfollow' : 'follow';
+    const url = `/users/${userId}/${action}`;
+
     $.ajax({
         type: 'POST',
-        url: '/users/' + userId + '/' + (isUserFollowed ? 'unfollow' : 'follow'), 
+        url: url,
         data: {
             _token: csrfToken,
         },
         success: function() {
-            button.text(isUserFollowed ? 'Follow' : 'Unfollow'); 
-            button.toggleClass('btn-primary btn-danger'); 
+            button.text(isUserFollowed ? 'Follow' : 'Unfollow');
+            button.toggleClass('btn-primary btn-danger');
 
-            if (window.location.pathname === '/profile/' + userId) {
+            if (window.location.pathname === `/profile/${userId}`) {
                 window.location.reload();
             }
         }
