@@ -62,4 +62,4 @@
     @endforeach
 </div>
 
-@include('post.delete-confirmation')
+@include('modal.delete-confirmation')
