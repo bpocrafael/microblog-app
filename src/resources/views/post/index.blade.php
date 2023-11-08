@@ -38,32 +38,32 @@
                 @endif
                 @if ($post->original_post_id)
                     @if ($originalPost = $post->originalPost)
-                    <div class="d-flex justify-content-center align-items-center mb-3 border" style="background-color: #FFFFFF;">
+                    <div class="d-flex justify-content-center align-items-center border" style="background-color: #FFFFFF;">
                         <div class="card-body">
                         <h4 class="card-text" style="color: #388087;">{{ $originalPost->user->full_name }}</h4>
                         <p class="card-text" style="font-size: 18px; color: #388087;">{{ $originalPost->content }}</p>
                         @if ($originalPost->image)
-                                <img height="250px" width="150px" src="{{ asset('/storage/images/'.$originalPost->image) }}" alt="Original Post Image" class="img-fluid">
+                            <img height="250px" width="150px" src="{{ asset('/storage/images/'.$originalPost->image) }}" alt="Original Post Image" class="img-fluid">
                         @endif
                         </div>
                     </div>
                     @endif
                 @endif
-            <div class="d-flex justify-content-between align-items-center">    
-                <div>
-                    <span class="like-count text-muted small" data-post-id="{{ $post->id }}">
-                        {{ $post->likes->count() === 0 ? '' : $post->likes->count() . ' ' . ($post->likes->count() === 1 ? 'Like' : 'Likes') }}
-                    </span>
-                    <span class="comment-count text-muted small">
-                        {{ $post->commentCount() === 0 ? '' : $post->commentCount() . ' ' . ($post->commentCount() === 1 ? 'Comment' : 'Comments') }}
-                    </span>
+                <div class="d-flex justify-content-between align-items-center">    
+                    <div>
+                        <span class="like-count text-muted small" data-post-id="{{ $post->id }}">
+                            {{ $post->likes->count() === 0 ? '' : $post->likes->count() . ' ' . ($post->likes->count() === 1 ? 'Like' : 'Likes') }}
+                        </span>
+                        <span class="comment-count text-muted small ms-1">
+                            {{ $post->commentCount() === 0 ? '' : $post->commentCount() . ' ' . ($post->commentCount() === 1 ? 'Comment' : 'Comments') }}
+                        </span>
+                    </div>
+                    <div>                
+                        <span class="share-count text-muted small">
+                        {{ $post->shareCount() === 0 ? '' : $post->shareCount() . ' ' . ($post->shareCount() === 1 ? 'Share' : 'Shares') }}
+                        </span>
+                    </div>
                 </div>
-                <div>                
-                    <span class="share-count text-muted small">
-                    {{ $post->shareCount() === 0 ? '' : $post->shareCount() . ' ' . ($post->shareCount() === 1 ? 'Share' : 'Shares') }}
-                    </span>
-                </div>
-            </div>
             </div>
             <div class="card-footer d-flex justify-content-between align-items-center" style="border-top: 1px solid #388087;">
                 <div class="interaction mt-1">

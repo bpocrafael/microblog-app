@@ -63,7 +63,7 @@
             </div>
         @else
             <div class="card-body">
-                <p class="card-text text-center">You are not following this user. Follow them to see their posts.</p>
+                <p class="card-text text-center text-muted">You are not following this user. Follow them to see their posts.</p>
             </div>
         @endif
 

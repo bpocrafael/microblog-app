@@ -15,7 +15,7 @@
             @include('post.index')
         @else
             <div class="card-body">
-                <p class="card-text" style="color: #388087;">You have not made any posts yet.</p>
+                <p class="card-text text-center text-muted">You have not made any posts yet.</p>
             </div>
         @endif
         <div class="d-flex mt-2 justify-content-center">
