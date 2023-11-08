@@ -25,9 +25,10 @@ $(document).ready(function () {
                     $(`.delete-button[data-id="${deleteId}"]`).closest('.card').remove();
                     modal.modal('hide').remove();
                     
-                    if (window.location.pathname.includes('/comments/')) {
+                    if (['/comments/', '/home', '/profile/show'].some(path => window.location.pathname.includes(path))) {
                         window.location.reload();
-                    }                   
+                    }
+                                    
                 },
                 error: function () {
                     modal.modal('hide').remove();
