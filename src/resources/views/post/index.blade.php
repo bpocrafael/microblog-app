@@ -42,6 +42,9 @@
                 <span class="like-count" data-post-id="{{ $post->id }}">
                     {{ $post->likes->count() === 0 ? '' : $post->likes->count() . ' ' . ($post->likes->count() === 1 ? 'Like' : 'Likes') }}
                 </span>
+                <span class="comment-count">
+                    {{ $post->commentCount() === 0 ? '' : $post->commentCount() . ' ' . ($post->commentCount() === 1 ? 'Comment' : 'Comments') }}
+                </span>
             </div>
             <div class="card-footer d-flex justify-content-between align-items-center">
                 <div class="interaction mt-1">

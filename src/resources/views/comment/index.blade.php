@@ -15,6 +15,9 @@
                 @if ($post->image)
                     <img height="250px" width="150px" src="{{ asset('/storage/images/'.$post->image) }}" alt="Post Image" class="img-fluid">
                 @endif
+                <span class="comment-count">
+                    {{ $post->commentCount() === 0 ? '' : $post->commentCount() . ' ' . ($post->commentCount() === 1 ? 'Comment' : 'Comments') }}
+                </span>
             </div>
             <div class="card-footer align-items-center">
                 <form id="comment-form" action="{{ route('comments.store',$post->id) }}" method="POST" enctype="multipart/form-data">
