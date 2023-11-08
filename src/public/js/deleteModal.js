@@ -24,6 +24,10 @@ $(document).ready(function () {
                 success: function () {
                     $(`.delete-button[data-id="${deleteId}"]`).closest('.card').remove();
                     modal.modal('hide').remove();
+                    
+                    if (window.location.pathname.includes('/comments/')) {
+                        window.location.reload();
+                    }                   
                 },
                 error: function () {
                     modal.modal('hide').remove();
