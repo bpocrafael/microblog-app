@@ -5,9 +5,11 @@
                 <div class="card-body p-4">
                     <div class="d-flex text-black">
                         <div class="flex-shrink-0">
-                            <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png"
-                                alt="Generic placeholder image" class="img-fluid"
-                                style="width: 180px; border-radius: 10px;">
+                            @if (auth()->user()->profileInformation && auth()->user()->profileInformation->image)
+                                <img src="{{ asset('/storage/images/' . auth()->user()->profileInformation->image) }}" alt="Profile Picture" class="img-fluid" style="width: 180px; border-radius: 10px;">
+                            @else
+                                <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid" style="width: 180px; border-radius: 10px;">
+                            @endif
                         </div>
                         <div class="flex-grow-1 ms-3">
                             @auth
