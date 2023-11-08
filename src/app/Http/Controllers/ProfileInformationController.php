@@ -44,10 +44,21 @@ class ProfileInformationController extends Controller
             $profileInformation = $this->profileService->getProfileInformation($user);
 
             if ($request->hasFile('profile_pic')) {
-                $image = $request->file('profile_pic');
-                $image_name = $image->getClientOriginalName();
-                $image->storeAs(self::DESTINATION_PATH, $image_name);
-                $validatedData['image'] = $image_name;
+                $images = $request->file('profile_pic');
+
+                if (is_array($images)) {
+                    foreach ($images as $image) {
+                        $image_name = $image->getClientOriginalName();
+                        $image->storeAs(self::DESTINATION_PATH, $image_name);
+                    }
+                } elseif ($images instanceof \Illuminate\Http\UploadedFile) {
+                    $image_name = $images->getClientOriginalName();
+                    $images->storeAs(self::DESTINATION_PATH, $image_name);
+                }
+
+                if (isset($image_name)) {
+                    $validatedData['image'] = $image_name;
+                }
             }
 
             $this->profileService->updateProfileInformation($profileInformation, $validatedData);
@@ -78,5 +89,6 @@ class ProfileInformationController extends Controller
         if ($isDeleted) {
             return redirect()->route('profile-info.create');
         }
+        return redirect()->route('profile-info.create')->with('error', 'Unable to delete profile picture.');
     }
 }

@@ -39,14 +39,16 @@ class ProfileInformationService
     /**
      * Delete user's profile picture.
      */
-    public function deleteProfilePicture(User $user): bool
+    public function deleteProfilePicture(?User $user): bool
     {
-        $profileInformation = $this->getProfileInformation($user);
+        if ($user) {
+            $profileInformation = $this->getProfileInformation($user);
 
-        if ($profileInformation->image) {
-            $profileInformation->update(['image' => null]);
+            if ($profileInformation->image) {
+                $profileInformation->update(['image' => null]);
 
-            return true;
+                return true;
+            }
         }
         return false;
     }
