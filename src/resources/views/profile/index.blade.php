@@ -28,6 +28,13 @@
                 {{ $user->profileInformation ? $user->profileInformation->about : 'Bio not available' }}
             </p>
             </div>
+            <div>
+                @if ($user->profileInformation)
+                    <p class="text-muted mb-3 text-center">{{ $user->profileInformation->about ? ' ' . $user->profileInformation->about : ''  }}</p>
+                @else
+                    <p class="text-muted mb-3">Bio not available.</p>
+                @endif
+            </div>
                 <div class="d-flex pt-1 justify-content-center mb-5">
                     <button type="button" class="btn me-1" data-bs-toggle="modal" data-bs-target="#followersModal" style="color: #388087; border-color: #388087;">Followers</button>
                     <button type="button" class="btn me-1" data-bs-toggle="modal" data-bs-target="#followingModal" style="color: #388087; border-color: #388087;">Following</button>
