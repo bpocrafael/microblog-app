@@ -46,12 +46,19 @@
     @include('follow.followers')
     @include('follow.followings')
 
-    <div>
-        @if ($posts && $posts->count() > 0)
-            @include('post.index')
+    
+    <div id="userPosts">
+        @if ($userFollowService->isFollowingExist(auth()->user(), $user))
+            @if ($posts && $posts->count() > 0)
+                @include('post.index')
+            @else
+                <div class="card-body">
+                    <p class="card-text text-center">No posts made yet.</p>
+                </div>
+            @endif
         @else
             <div class="card-body">
-                <p class="card-text text-center">No posts made yet.</p>
+                <p class="card-text text-center">You are not following this user. Follow them to see their posts.</p>
             </div>
         @endif
         <div class="d-flex justify-content-center">
@@ -60,4 +67,5 @@
             @endif
         </div>
     </div>
+    
 @endsection
