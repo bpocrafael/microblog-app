@@ -4,7 +4,7 @@ $(document).ready(function () {
         const deleteButton = $(this);
         const deleteId = deleteButton.data('id');
         const deleteType = deleteButton.data('type');
-        const modalId = 'dModal-' + deleteId;
+        const modalId = `dModal-${deleteId}`;
         const modal = $('#dModal').clone().attr('id', modalId);
 
         modal.find('.confirm-delete').data('id', deleteId);
@@ -15,14 +15,14 @@ $(document).ready(function () {
         modal.find('.confirm-delete').click(function () {
             const csrfToken = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
-                url: '/' + deleteType + 's/' + deleteId,
+                url: `/${deleteType}s/${deleteId}`,
                 type: 'POST',
                 data: {
                     '_method': 'DELETE',
                     _token: csrfToken,
                 },
                 success: function () {
-                    $('.delete-button[data-id="' + deleteId + '"]').closest('.card').remove();
+                    $(`.delete-button[data-id="${deleteId}"]`).closest('.card').remove();
                     modal.modal('hide').remove();
                 },
                 error: function () {
