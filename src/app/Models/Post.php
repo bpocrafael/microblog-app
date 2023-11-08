@@ -54,4 +54,9 @@ class Post extends Model
     {
         return $this->belongsTo(Post::class, 'original_post_id');
     }
+
+    public function commentCount(): int
+    {
+        return $this->comments()->count();
+    }
 }
