@@ -11,6 +11,7 @@ use App\Http\Requests\ProfileInformationStoreRequest;
 
 class ProfileInformationController extends Controller
 {
+    public const DESTINATION_PATH = 'public/images';
     protected ProfileInformationService $profileService;
 
     public function __construct(ProfileInformationService $profileService)
@@ -39,10 +40,15 @@ class ProfileInformationController extends Controller
             DB::beginTransaction();
 
             $user = auth()->user();
-
             $validatedData = $request->validated();
-
             $profileInformation = $this->profileService->getProfileInformation($user);
+
+            if ($request->hasFile('profile_pic')) {
+                $image = $request->file('profile_pic');
+                $image_name = $image->getClientOriginalName();
+                $image->storeAs(self::DESTINATION_PATH, $image_name);
+                $validatedData['image'] = $image_name;
+            }
 
             $this->profileService->updateProfileInformation($profileInformation, $validatedData);
 
@@ -61,4 +67,16 @@ class ProfileInformationController extends Controller
         }
     }
 
+    /**
+     * Delete the user's profile picture.
+     */
+    public function deleteProfilePicture(): RedirectResponse
+    {
+        $user = auth()->user();
+        $isDeleted = $this->profileService->deleteProfilePicture($user);
+
+        if ($isDeleted) {
+            return redirect()->route('profile-info.create');
+        }
+    }
 }

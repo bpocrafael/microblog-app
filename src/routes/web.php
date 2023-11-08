@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('profile-info', ProfileInformationController::class);
     Route::get('/posts/{post}/share', [ShareController::class, 'index'])->name('share.index');
     Route::post('/home', [ShareController::class, 'store'])->name('share.store');
+    Route::delete('/profile-info', [ProfileInformationController::class, 'deleteProfilePicture'])->name('profile.delete');
 });
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
