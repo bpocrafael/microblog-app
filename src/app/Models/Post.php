@@ -62,4 +62,9 @@ class Post extends Model
     {
         return $this->comments()->count();
     }
+
+    public function shareCount(): int
+    {
+        return $this->where('original_post_id', $this->id)->count();
+    }
 }
