@@ -20,15 +20,9 @@
                 <div class="d-flex align-items-center mb-3">
                     <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="{{ $post->user->name }} Profile Picture" class="rounded-circle" width="35" height="35">
                     <div class="ms-3">
-                        @if (auth()->check() && $post->user->id === auth()->user()->id)
-                            <a class="card-title text-decoration-none h4" href="{{ route('profile.show') }}" style="color: #388087;">
-                                {{ $post->user->full_name }}
-                            </a>
-                        @else
-                            <a class="card-title text-decoration-none h4" href="{{ route('profile.index', $post->user) }}" style="color: #388087;">
-                                {{ $post->user->full_name }}
-                            </a>
-                        @endif
+                        <a class="card-title text-decoration-none h4" href="{{ $post->userPost ? route('profile.show') : route('profile.index', $post->user) }}" style="color: #388087;">
+                            {{ $post->user->full_name }}
+                        </a>
                     </div>
                 </div>
                 <p class="card-text" style="font-size: 20px; color: #388087;">{{ $post->content }}</p>
