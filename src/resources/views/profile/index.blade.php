@@ -58,16 +58,17 @@
                     <p class="card-text text-center">No posts made yet.</p>
                 </div>
             @endif
+            <div class="d-flex justify-content-center">
+                @if ($posts)
+                    {{ $posts->links() }}
+                @endif
+            </div>
         @else
             <div class="card-body">
                 <p class="card-text text-center">You are not following this user. Follow them to see their posts.</p>
             </div>
         @endif
-        <div class="d-flex justify-content-center">
-            @if ($posts)
-                {{ $posts->links() }}
-            @endif
-        </div>
+
     </div>
     
 @endsection
