@@ -5,11 +5,11 @@
 
     <div class="row mt-4">
         <div class="col-sm-10 mx-auto">
-            <div class="card shadow-lg" style="border: 2px solid #2190AE">
-                <div class="card-header mb-2" style="background-color: #2190AE">
-                    <h2 class="my-2 text-white text-center">Search Results</h2>
+            <div class="card shadow" style="border: 1px solid #388087">
+                <div class="card-header" style="background-color: #f6f6f2; border-bottom: 1px solid #388087;">
+                    <h2 class="my-2 text-center" style="color: #388087;">Search Results</h2>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="background-color: #f6f6f2;">
                     @if (count($userResults) === 0 && count($postResults) === 0)
                         <p class="text-center">No results found.</p>
                     @else
@@ -29,7 +29,7 @@
                                             </li>
                                         @endif
                                     @else
-                                        <li class="list-group-item mb-3">
+                                        <li class="list-group-item">
                                             <a href="{{ route('profile.show') }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
                                         </li>
                                     @endif
@@ -38,7 +38,7 @@
                         @endif
                         @if (count($postResults) > 0)
                             @foreach ($postResults as $post)
-                                <div class="card mb-3">
+                                <div class="card mt-3">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $post->user->name }}</h5>
                                         <p class="card-text">{{ $post->content }}</p>

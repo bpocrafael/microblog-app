@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="vh-75" style="background-color: #023047;">
+<section class="vh-75" style="background-color: #388087;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-md-6">
-                <div class="card text-white" style="border-radius: 25px; background-color: #34495E;">
-                    <div class="card-header" style="border-radius: 20px; background: #FFA902;">{{ __('Reset Password') }}</div>
+                <div class="card text-white" style="border-radius: 15px; background-color: #f6f6f2;">
+                    <div class="card-header text-center text-uppercase" style="color: #388087; border-bottom: 3px solid #388087">{{ __('Reset Password') }}</div>
 
-                    <div class="card-body">
+                    <div class="card-body" style="color: #388087;">
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
@@ -30,7 +30,7 @@
                             </div>
 
                             <div class="mb-0">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn text-white mt-2 col-12" style="background-color: #388087;">
                                     {{ __('Send Password Reset Link') }}
                                 </button>
                             </div>
