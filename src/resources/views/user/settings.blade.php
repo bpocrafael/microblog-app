@@ -11,8 +11,13 @@
                     <div class="card-body">
                         <div class="account-settings">
                             <div class="user-profile">
-                                <div class="user-avatar mb-3">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" height="250px" width="250px">
+                                <div class="user-avatar mb-3 text-center">
+                                    @if (auth()->user()->profileInformation && auth()->user()->profileInformation->image)
+                                        <img src="{{ asset('/storage/images/' . auth()->user()->profileInformation->image) }}" alt="Profile Picture" height="250px" width="250px">
+                                        <button type="button" class="btn btn-sm btn-outline-dark me-1 mt-2 col-12" data-bs-toggle="modal" data-bs-target="#deleteProfileModal">Remove Profile Picture</button>
+                                    @else
+                                        <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" height="280px" width="250px">
+                                    @endif
                                 </div>
                                 @auth
                                     @if (auth()->user()->profileInformation)
@@ -47,7 +52,7 @@
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <h6 class="mb-3 text-primary">Personal Details</h6>
                             </div>
-                            <form method="POST" action="{{ route('profile-info.store') }}">
+                            <form method="POST" action="{{ route('profile-info.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
@@ -68,7 +73,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
                                         <label for="profile_pic">Profile Picture</label>
                                         <input type="file" class="form-control" id="profile_pic" name="profile_pic">
                                     </div>
@@ -93,3 +98,5 @@
         </div>
     </div>
 @endsection
+
+@include('modal.delete-profile')
