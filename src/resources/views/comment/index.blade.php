@@ -8,7 +8,11 @@
         <div class="card shadow" style="background-color: #FAF9F6; border: 1px solid #388087; max-width: 50rem; margin: 0 auto;">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="{{ $post->user->name }} Profile Picture" class="rounded-circle mb-3" width="35" height="35">
+                    @if ($post->user->profileInformation && $post->user->profileInformation->image)
+                        <img src="{{ asset('/storage/images/' . $post->user->profileInformation->image) }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3" width="35" height="35">
+                    @else
+                        <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle mb-3" width="35" height="35">
+                    @endif
                     <div class="ms-3">
                         @if (auth()->check() && $post->user->id === auth()->user()->id)
                             <a class="card-title text-decoration-none h4" href="{{ route('profile.show') }}" style="color: #388087;">
@@ -52,7 +56,11 @@
             <div class="card-body d-flex justify-content-between">
                 <div>
                     <div class="d-flex align-items-center">
-                    <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="{{ $post->user->name }} Profile Picture" class="rounded-circle mb-3" width="35" height="35">
+                    @if ($comment->user->profileInformation && $comment->user->profileInformation->image)
+                        <img src="{{ asset('/storage/images/' . $comment->user->profileInformation->image) }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3" width="35" height="35">
+                    @else
+                        <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle mb-3" width="35" height="35">
+                    @endif
                     <div class="ms-3">
                         @if (auth()->check() && $post->user->id === auth()->user()->id)
                             <a class="card-title text-decoration-none h4" href="{{ route('profile.show') }}" style="color: #388087;">

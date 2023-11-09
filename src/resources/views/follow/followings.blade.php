@@ -10,7 +10,14 @@
                     @foreach ($user->followings as $following)
                         @if (Auth::user() && $following->id !== Auth::user()->id)
                             <li class="list-group-item d-flex justify-content-between align-items-center" style="color: #388087;">
-                                <span>{{ $following->name }}</span>
+                                <div>
+                                    @if ($following->profileInformation && $following->profileInformation->image)
+                                        <img src="{{ asset('/storage/images/' . $following->profileInformation->image) }}" alt="Profile Picture" class="img-fluid rounded-circle" width="40" height="40">
+                                    @else
+                                        <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle" width="40" height="40">
+                                    @endif
+                                    <span class="ms-2" style="color: #388087;">{{ $following->full_name }}</span>
+                                </div>
                                 @if ($userFollowService->isFollowingExist(Auth::user(), $following))
                                     <button class="toggle-button btn btn-danger btn-sm mt-2" data-user="{{ $following->id }}" data-action="unfollow">Unfollow</button>
                                 @else
@@ -19,7 +26,12 @@
                             </li>
                         @else
                             <li class="list-group-item" style="color: #388087;">
-                                <span>{{ $following->name }}</span>
+                                @if ($following->profileInformation && $following->profileInformation->image)
+                                    <img src="{{ asset('/storage/images/' . $following->profileInformation->image) }}" alt="Profile Picture" class="img-fluid rounded-circle" width="40" height="40">
+                                @else
+                                    <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle" width="40" height="40">
+                                @endif
+                                <span class="ms-2" style="color: #388087;">{{ $following->full_name }}</span>
                             </li>
                         @endif
                     @endforeach

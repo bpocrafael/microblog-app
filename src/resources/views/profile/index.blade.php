@@ -24,9 +24,6 @@
                     @endif
                 @endif
             </div>
-            <p class="text-muted mb-3">
-                {{ $user->profileInformation ? $user->profileInformation->about : 'Bio not available' }}
-            </p>
             </div>
             <div>
                 @if ($user->profileInformation)

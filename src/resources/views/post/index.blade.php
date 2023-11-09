@@ -16,7 +16,11 @@
             </div>
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="{{ $post->user->name }} Profile Picture" class="rounded-circle mb-3" width="35" height="35">
+                    @if ($post->user->profileInformation && $post->user->profileInformation->image)
+                        <img src="{{ asset('/storage/images/' . $post->user->profileInformation->image) }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3" width="35" height="35">
+                    @else
+                        <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle mb-3" width="35" height="35">
+                    @endif
                     <div class="ms-3">
                         @if (auth()->check() && $post->user->id === auth()->user()->id)
                             <a class="card-title text-decoration-none h4" href="{{ route('profile.show') }}" style="color: #388087;">
@@ -34,17 +38,26 @@
                 </div>
                 <p class="card-text" style="font-size: 18px; color: #388087;">{{ $post->content }}</p>
                 @if ($post->image)
-                    <img height="250px" width="150px" src="{{ asset('/storage/images/'.$post->image) }}" alt="Post Image" class="img-fluid">
+                    <img height="150px" width="150px" src="{{ asset('/storage/images/'.$post->image) }}" alt="Post Image" class="img-fluid">
                 @endif
                 @if ($post->original_post_id)
                     @if ($originalPost = $post->originalPost)
                     <div class="d-flex justify-content-center align-items-center border" style="background-color: #FFFFFF;">
                         <div class="card-body">
-                        <h4 class="card-text" style="color: #388087;">{{ $originalPost->user->full_name }}</h4>
-                        <p class="card-text" style="font-size: 18px; color: #388087;">{{ $originalPost->content }}</p>
-                        @if ($originalPost->image)
-                            <img height="250px" width="150px" src="{{ asset('/storage/images/'.$originalPost->image) }}" alt="Original Post Image" class="img-fluid">
-                        @endif
+                            <div class="d-flex align-items-center mb-3">
+                                @if ($originalPost->user->profileInformation && $originalPost->user->profileInformation->image)
+                                    <img src="{{ asset('/storage/images/' . $originalPost->user->profileInformation->image) }}" alt="Profile Picture" class="img-fluid rounded-circle" width="35" height="35">
+                                @else
+                                    <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle" width="35" height="35">
+                                @endif
+                                <div class="ms-2">
+                                    <h4 class="card-text" style="color: #388087;">{{ $originalPost->user->full_name }}</h4>
+                                </div>
+                            </div>
+                            <p class="card-text" style="font-size: 18px; color: #388087;">{{ $originalPost->content }}</p>
+                            @if ($originalPost->image)
+                                <img height="150px" width="150px" src="{{ asset('/storage/images/'.$originalPost->image) }}" alt="Original Post Image" class="img-fluid">
+                            @endif
                         </div>
                     </div>
                     @endif
