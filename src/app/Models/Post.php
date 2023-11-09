@@ -68,7 +68,7 @@ class Post extends Model
     {
         return $this->where('original_post_id', $this->id)->count();
     }
-    
+
     public function getUserPostAttribute(): Bool
     {
         return Auth::check() && optional($this->user)->id === Auth::id();
