@@ -16,26 +16,27 @@
                         @if (count($userResults) > 0)
                             <ul class="list-group">
                                 @foreach ($userResults as $user)
-                                    @if(Auth::user() != $user)
+                                    @if(Auth::user() && Auth::user()->id != $user->id) {{-- Updated condition --}}
                                         @if ($userFollowService->isFollowingExist(auth()->user(), $user))
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
+                                                <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->display_name }}</a>
                                                 <button class="toggle-button btn btn-danger btn-sm mt-2" data-user="{{ $user->id }}" data-action="unfollow">Unfollow</button>
                                             </li>
                                         @else
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
+                                                <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->display_name }}</a>
                                                 <button class="toggle-button btn btn-primary btn-sm mt-2" data-user="{{ $user->id }}" data-action="follow">Follow</button>
                                             </li>
                                         @endif
                                     @else
-                                        <li class="list-group-item">
-                                            <a href="{{ route('profile.show') }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
+                                        <li class="list-group-item mb-3">
+                                            <a href="{{ route('profile.show') }}" class="text-dark text-decoration-none">{{ $user->display_name }}</a>
                                         </li>
                                     @endif
                                 @endforeach
                             </ul>
                         @endif
+                
                         @if (count($postResults) > 0)
                             @foreach ($postResults as $post)
                                 <div class="card mt-3">

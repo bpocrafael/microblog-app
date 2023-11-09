@@ -14,7 +14,18 @@ class SearchService
      */
     public function search(string $query): array
     {
-        $userResults = User::where('name', 'like', "%$query%")->get();
+        $userResultsByFullName = User::whereHas('profileInformation', function ($queryBuilder) use ($query) {
+            $queryBuilder->whereRaw("CONCAT_WS(' ', firstname, middlename, surname) REGEXP ?", [$query]);
+        })->get();
+        
+
+        $userResultsByUsername = User::where('name', 'like', "%$query%")->get();
+        $userResults = $userResultsByFullName->concat($userResultsByUsername);
+        $userResults = $userResults->map(function ($user) {
+            $user->display_name = $user->full_name ?? $user->name;
+            return $user;
+        });
+
         $postResults = Post::whereRaw("content REGEXP '[[:<:]]" . $query . "[[:>:]]'")->get();
 
         return compact('userResults', 'postResults');
