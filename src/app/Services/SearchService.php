@@ -17,7 +17,7 @@ class SearchService
         $userResultsByFullName = User::whereHas('profileInformation', function ($queryBuilder) use ($query) {
             $queryBuilder->whereRaw("CONCAT_WS(' ', firstname, middlename, surname) REGEXP ?", [$query]);
         })->get();
-        
+
 
         $userResultsByUsername = User::where('name', 'like', "%$query%")->get();
         $userResults = $userResultsByFullName->concat($userResultsByUsername);
