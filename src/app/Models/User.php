@@ -110,4 +110,13 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         return $this->name ?: 'No information available.';
     }
+
+    public function getDisplayNameAttribute(): string
+    {
+        if ($this->full_name) {
+            return $this->full_name;
+        }
+
+        return $this->name;
+    }
 }
