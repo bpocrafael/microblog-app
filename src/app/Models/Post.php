@@ -54,4 +54,17 @@ class Post extends Model
     {
         return $this->belongsTo(Post::class, 'original_post_id');
     }
+
+    /**
+     * Get the count of comment
+     */
+    public function commentCount(): int
+    {
+        return $this->comments()->count();
+    }
+
+    public function shareCount(): int
+    {
+        return $this->where('original_post_id', $this->id)->count();
+    }
 }
