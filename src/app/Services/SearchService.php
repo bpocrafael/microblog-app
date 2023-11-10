@@ -41,7 +41,7 @@ class SearchService
                 $query->orWhereRaw("content REGEXP '[[:<:]]" . $escapedWord . "[[:>:]]'");
             }
         })->get();
-        
+
         return compact('userResults', 'postResults');
     }
 }
