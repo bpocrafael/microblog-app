@@ -31,7 +31,7 @@ class LoginController extends Controller
 
         if (auth()->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('profile.show');
+            return redirect()->route('user.home');
         }
 
         return redirect()->route('login')->with('error', 'Incorrect email or password. Please try again.');
