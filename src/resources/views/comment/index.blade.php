@@ -14,15 +14,11 @@
                         <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle mb-3" width="35" height="35">
                     @endif
                     <div class="ms-3">
-                        @if (auth()->check() && $post->user->id === auth()->user()->id)
-                            <a class="card-title text-decoration-none h4" href="{{ route('profile.show') }}" style="color: #388087;">
-                                {{ $post->user->full_name }}
-                            </a>
-                        @else
-                            <a class="card-title text-decoration-none h4" href="{{ route('profile.index', $post->user) }}" style="color: #388087;">
-                                {{ $post->user->full_name }}
-                            </a>
-                        @endif
+                        <a class="card-title text-decoration-none h4" 
+                            href="{{ auth()->check() && $post->user->id === auth()->user()->id ? route('profile.show') : route('profile.index', $post->user) }}" 
+                            style="color: #388087;">
+                            {{ $post->user->display_name }}
+                        </a>
                         <p class="text-secondary small text-xs opacity-75">
                             <i>{{ $post->updated_at->setTimezone('Asia/Manila')->format('j M Y \a\t g:ia') }}</i>
                         </p>
@@ -56,21 +52,17 @@
             <div class="card-body d-flex justify-content-between">
                 <div>
                     <div class="d-flex align-items-center">
-                    @if ($comment->user->profileInformation && $comment->user->profileInformation->image)
-                        <img src="{{ asset('/storage/images/' . $comment->user->profileInformation->image) }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3" width="35" height="35">
-                    @else
-                        <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle mb-3" width="35" height="35">
-                    @endif
+                        <img src="{{ $comment->user->profileInformation && $comment->user->profileInformation->image ? 
+                        asset('/storage/images/' . $comment->user->profileInformation->image) : 'https://cdn-icons-png.flaticon.com/512/456/456283.png' }}" 
+                        alt="Profile Picture" 
+                        class="img-fluid rounded-circle mb-3" 
+                        width="35" height="35">
                     <div class="ms-3">
-                        @if (auth()->check() && $post->user->id === auth()->user()->id)
-                            <a class="card-title text-decoration-none h4" href="{{ route('profile.show') }}" style="color: #388087;">
-                                {{ $comment->user->full_name }}
-                            </a>
-                        @else
-                            <a class="card-title text-decoration-none h4" href="{{ route('profile.index', $post->user) }}" style="color: #388087;">
-                                {{ $comment->user->full_name }}
-                            </a>
-                        @endif
+                        <a class="card-title text-decoration-none h4" 
+                            href="{{ auth()->check() && $comment->user->id === auth()->user()->id ? route('profile.show') : route('profile.index', $comment->user) }}" 
+                            style="color: #388087;">
+                            {{ $comment->user->full_name }}
+                        </a>
                         <p class="text-secondary small text-xs opacity-75">
                             <i>{{ $comment->updated_at->setTimezone('Asia/Manila')->format('j M Y \a\t g:ia') }}</i>
                         </p>
