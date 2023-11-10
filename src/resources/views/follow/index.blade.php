@@ -17,9 +17,10 @@
                 </a>
             </div>
             <div>
-                <p class="text-muted mb-3 {{ auth()->user()->profileInformation ? 'text-center' : '' }}">
+                <p class="text-muted mb-3 text-center {{ auth()->user()->profileInformation ? 'text-center' : '' }}">
                     {{ auth()->user()->profileInformation ? (auth()->user()->profileInformation->about ? ' ' . auth()->user()->profileInformation->about : '') : 'Bio not available.' }}
-                </p>                
+                </p>
+                               
             @endauth
             </div>
             <div class="d-flex pt-1 justify-content-center">
