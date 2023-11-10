@@ -14,19 +14,33 @@ class SearchService
      */
     public function search(string $query): array
     {
-        $userResultsByFullName = User::whereHas('profileInformation', function ($queryBuilder) use ($query) {
-            $queryBuilder->whereRaw("CONCAT_WS(' ', firstname, middlename, surname) REGEXP ?", [$query]);
+        $words = explode(' ', $query);
+
+        $userResults = User::whereHas('profileInformation', function ($queryBuilder) use ($words) {
+            $queryBuilder->where(function ($query) use ($words) {
+                foreach ($words as $word) {
+                    $query->orWhere('firstname', 'LIKE', "%$word%")
+                          ->orWhere('middlename', 'LIKE', "%$word%")
+                          ->orWhere('surname', 'LIKE', "%$word%");
+                }
+            });
+        })->orWhere(function ($query) use ($words) {
+            foreach ($words as $word) {
+                $query->orWhere('name', 'LIKE', "%$word%");
+            }
         })->get();
 
-
-        $userResultsByUsername = User::where('name', 'like', "%$query%")->get();
-        $userResults = $userResultsByFullName->concat($userResultsByUsername);
         $userResults = $userResults->map(function ($user) {
             $user->display_name = $user->full_name ?? $user->name;
             return $user;
         });
 
-        $postResults = Post::whereRaw("content REGEXP '[[:<:]]" . $query . "[[:>:]]'")->get();
+        $postResults = Post::where(function ($query) use ($words) {
+            foreach ($words as $word) {
+                $escapedWord = preg_quote($word, '/');
+                $query->orWhereRaw("content REGEXP '[[:<:]]" . $escapedWord . "[[:>:]]'");
+            }
+        })->get();
 
         return compact('userResults', 'postResults');
     }

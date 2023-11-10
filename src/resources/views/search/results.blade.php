@@ -16,32 +16,26 @@
                         @if (count($userResults) > 0)
                             <ul class="list-group">
                                 @foreach ($userResults as $user)
-                                    @if(Auth::user() && Auth::user()->id != $user->id) {{-- Updated condition --}}
-                                        @if ($userFollowService->isFollowingExist(auth()->user(), $user))
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->display_name }}</a>
-                                                <button class="toggle-button btn btn-danger btn-sm mt-2" data-user="{{ $user->id }}" data-action="unfollow">Unfollow</button>
-                                            </li>
-                                        @else
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->display_name }}</a>
-                                                <button class="toggle-button btn btn-primary btn-sm mt-2" data-user="{{ $user->id }}" data-action="follow">Follow</button>
-                                            </li>
+                                    <li class="list-group-item {{ Auth::user() && Auth::user()->id != $user->id ? 'd-flex justify-content-between align-items-center' : 'mb-3' }}">
+                                        <a href="{{ Auth::user() && Auth::user()->id != $user->id ? route('profile.index', ['user' => $user->id]) : route('profile.show') }}" 
+                                        class="text-dark text-decoration-none">{{ $user->display_name }}
+                                        </a>
+                                        @if(Auth::user() && Auth::user()->id != $user->id)
+                                            <button class="toggle-button btn btn-{{ $userFollowService->isFollowingExist(auth()->user(), $user) ? 'danger' : 'primary' }} btn-sm mt-2" 
+                                                    data-user="{{ $user->id }}" 
+                                                    data-action="{{ $userFollowService->isFollowingExist(auth()->user(), $user) ? 'unfollow' : 'follow' }}">
+                                                {{ $userFollowService->isFollowingExist(auth()->user(), $user) ? 'Unfollow' : 'Follow' }}
+                                            </button>
                                         @endif
-                                    @else
-                                        <li class="list-group-item mb-3">
-                                            <a href="{{ route('profile.show') }}" class="text-dark text-decoration-none">{{ $user->display_name }}</a>
-                                        </li>
-                                    @endif
+                                    </li>
                                 @endforeach
                             </ul>
                         @endif
-                
                         @if (count($postResults) > 0)
                             @foreach ($postResults as $post)
                                 <div class="card mt-3">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ $post->user->name }}</h5>
+                                        <a href="{{ route('posts.show', $post->id) }}" class="card-title h5" style="text-decoration: none">{{ $post->user->name }}</a>
                                         <p class="card-text">{{ $post->content }}</p>
                                     </div>
                                 </div>
