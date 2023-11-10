@@ -27,11 +27,11 @@
                                 <div class="card-body">
                                         @if ($originalPost)
                                         <div class="d-flex align-items-center mb-3">
-                                            @if ($originalPost->user->profileInformation && $originalPost->user->profileInformation->image)
-                                                <img src="{{ asset('/storage/images/' . $originalPost->user->profileInformation->image) }}" alt="Profile Picture" class="img-fluid rounded-circle" width="35" height="35">
-                                            @else
-                                                <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle" width="35" height="35">
-                                            @endif
+                                            <img src="{{ $originalPost->user->profileInformation && $originalPost->user->profileInformation->image ? 
+                                            asset('/storage/images/' . $originalPost->user->profileInformation->image) : 'https://cdn-icons-png.flaticon.com/512/456/456283.png' }}" 
+                                            alt="Profile Picture" 
+                                            class="img-fluid rounded-circle" 
+                                            width="35" height="35">                                       
                                             <div class="ms-2">
                                                 <h4 class="card-title" style="color: #388087;">{{ $originalPost->user->full_name }}</h4>
                                             </div>
@@ -42,11 +42,12 @@
                                             @endif
                                         @else
                                         <div class="d-flex align-items-center mb-3">
-                                            @if ($post->user->profileInformation && $post->user->profileInformation->image)
-                                                <img src="{{ asset('/storage/images/' . $post->user->profileInformation->image) }}" alt="Profile Picture" class="img-fluid rounded-circle" width="35" height="35">
-                                            @else
-                                                <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle" width="35" height="35">
-                                            @endif
+                                            <img src="{{ $post->user->profileInformation && $post->user->profileInformation->image ? 
+                                            asset('/storage/images/' . $post->user->profileInformation->image) : 'https://cdn-icons-png.flaticon.com/512/456/456283.png' }}" 
+                                            alt="Profile Picture" 
+                                            class="img-fluid rounded-circle" 
+                                            width="35" height="35">
+                                       
                                             <div class="ms-2">
                                                 <h4 class="card-title" style="color: #388087;">{{ $post->user->full_name }}</h4>
                                             </div>

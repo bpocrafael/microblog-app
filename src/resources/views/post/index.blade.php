@@ -16,21 +16,16 @@
             </div>
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    @if ($post->user->profileInformation && $post->user->profileInformation->image)
-                        <img src="{{ asset('/storage/images/' . $post->user->profileInformation->image) }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3" width="35" height="35">
-                    @else
-                        <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle mb-3" width="35" height="35">
-                    @endif
+                    <img src="{{ $post->user->profileInformation && $post->user->profileInformation->image ? 
+                    asset('/storage/images/' . $post->user->profileInformation->image) : 'https://cdn-icons-png.flaticon.com/512/456/456283.png' }}" 
+                    alt="Profile Picture" 
+                    class="img-fluid rounded-circle mb-3" 
+                    width="35" height="35">
                     <div class="ms-3">
-                        @if (auth()->check() && $post->user->id === auth()->user()->id)
-                            <a class="card-title text-decoration-none h4" href="{{ route('profile.show') }}" style="color: #388087;">
-                                {{ $post->user->full_name }}
-                            </a>
-                        @else
-                            <a class="card-title text-decoration-none h4" href="{{ route('profile.index', $post->user) }}" style="color: #388087;">
-                                {{ $post->user->full_name }}
-                            </a>
-                        @endif
+                        <a class="card-title text-decoration-none h3" style="color: #388087;" href="{{ $post->ownPost() ? 
+                        route('profile.show') : route('profile.index', $post->user) }}">
+                            {{ $post->user->display_name }}
+                        </a>                        
                         <p class="text-secondary small text-xs opacity-75">
                             <i>{{ $post->updated_at->setTimezone('Asia/Manila')->format('j M Y \a\t g:ia') }}</i>
                         </p>
@@ -45,13 +40,16 @@
                     <div class="d-flex justify-content-center align-items-center border" style="background-color: #FFFFFF;">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">
-                                @if ($originalPost->user->profileInformation && $originalPost->user->profileInformation->image)
-                                    <img src="{{ asset('/storage/images/' . $originalPost->user->profileInformation->image) }}" alt="Profile Picture" class="img-fluid rounded-circle" width="35" height="35">
-                                @else
-                                    <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle" width="35" height="35">
-                                @endif
+                                <img src="{{ $originalPost->user->profileInformation && $originalPost->user->profileInformation->image ? 
+                                asset('/storage/images/' . $originalPost->user->profileInformation->image) : 'https://cdn-icons-png.flaticon.com/512/456/456283.png' }}" 
+                                alt="Profile Picture" 
+                                class="img-fluid rounded-circle" 
+                                width="35" height="35">
                                 <div class="ms-2">
-                                    <h4 class="card-text" style="color: #388087;">{{ $originalPost->user->full_name }}</h4>
+                                    <a class="card-text text-decoration-none h4" style="font-size: 20px; color: #388087;" href="{{ (auth()->check() && $originalPost->user->id === auth()->user()->id) ? 
+                                    route('profile.show') : route('profile.index', $originalPost->user) }}">
+                                        {{ $originalPost->user->display_name }}
+                                    </a>
                                 </div>
                             </div>
                             <p class="card-text" style="font-size: 18px; color: #388087;">{{ $originalPost->content }}</p>
@@ -81,12 +79,8 @@
             <div class="card-footer d-flex justify-content-between align-items-center" style="border-top: 1px solid #388087;">
                 <div class="interaction mt-1">
                     <button class="btn btn-sm like-button" data-post-id="{{ $post->id }}" data-initial-likes="{{ $post->likes->count() }}" style="background-color: #c2edce;">
-                        @if ($post->isLikedBy(auth()->user()))
-                            <i class="bi bi-hand-thumbs-down"></i> Unlike
-                        @else
-                            <i class="bi bi-hand-thumbs-up"></i> Like
-                        @endif
-                    </button>
+                        {{ $post->isLikedBy(auth()->user()) ? 'Unlike' : 'Like' }}
+                    </button>                    
                     <a href="{{ route('comments.index', $post->id) }}" class="btn btn-sm comment" style="background-color: #badfe7;">
                         <i class="bi bi-chat-dots"></i> Comment
                     </a>

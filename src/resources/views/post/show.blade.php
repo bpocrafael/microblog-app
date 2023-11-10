@@ -20,8 +20,9 @@
                 <div class="d-flex align-items-center mb-3">
                     <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="{{ $post->user->name }} Profile Picture" class="rounded-circle" width="35" height="35">
                     <div class="ms-3">
-                        <a class="card-title text-decoration-none h4" href="{{ $post->userPost ? route('profile.show') : route('profile.index', $post->user) }}" style="color: #388087;">
-                            {{ $post->user->full_name }}
+                        <a class="card-title text-decoration-none h4" href="{{ $post->ownPost() ? 
+                        route('profile.show') : route('profile.index', $post->user) }}" style="color: #388087;">
+                            {{ $post->user->display_name}}
                         </a>
                     </div>
                 </div>
@@ -36,13 +37,8 @@
             <div class="card-footer d-flex justify-content-between align-items-center" style="border-top: 1px solid #388087;">
                 <div class="interaction mt-1">
                     <button class="btn btn-sm like-button" data-post-id="{{ $post->id }}" data-initial-likes="{{ $post->likes->count() }}" style="background-color: #c2edce;">
-                        @if ($post->isLikedBy(auth()->user()))
-                            <i class="bi bi-hand-thumbs-down"></i> Unlike
-                        @else
-                            <i class="bi bi-hand-thumbs-up"></i> Like
-                        @endif
-                    </button>
-                    
+                        {{ $post->isLikedBy(auth()->user()) ? 'Unlike' : 'Like' }}
+                    </button>                   
                     <a href="{{ route('comments.index', $post->id) }}" class="btn btn-sm comment" style="background-color: #badfe7;">
                         <i class="bi bi-chat-dots"></i> Comment
                     </a>
