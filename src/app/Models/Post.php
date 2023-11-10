@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -69,8 +68,10 @@ class Post extends Model
         return $this->where('original_post_id', $this->id)->count();
     }
 
-    public function getUserPostAttribute(): Bool
+    public function ownPost(): bool
     {
-        return Auth::check() && optional($this->user)->id === Auth::id();
+        $authenticatedUser = auth()->user();
+
+        return $authenticatedUser && $this->user && $this->user->id === $authenticatedUser->id;
     }
 }
