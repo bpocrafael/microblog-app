@@ -37,11 +37,11 @@ class SearchService
 
         $postResults = Post::where(function ($query) use ($words) {
             foreach ($words as $word) {
-                $escapedWord = preg_quote($word, '/');
+                $escapedWord = preg_replace('/(\[|\]|\(|\))/', '\\\\$1', preg_quote($word, '/'));
                 $query->orWhereRaw("content REGEXP '[[:<:]]" . $escapedWord . "[[:>:]]'");
             }
         })->get();
-
+        
         return compact('userResults', 'postResults');
     }
 }
