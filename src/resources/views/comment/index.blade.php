@@ -8,27 +8,50 @@
         <div class="card shadow" style="background-color: #FAF9F6; border: 1px solid #388087; max-width: 50rem; margin: 0 auto;">
             <div class="card-body">
                 <div class="d-flex align-items-center">
-                    @if ($post->user->profileInformation && $post->user->profileInformation->image)
-                        <img src="{{ asset('/storage/images/' . $post->user->profileInformation->image) }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3" width="35" height="35">
-                    @else
-                        <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle mb-3" width="35" height="35">
-                    @endif
+                    <img src="{{ $post->user->profileInformation && $post->user->profileInformation->image ? 
+                    asset('/storage/images/' . $post->user->profileInformation->image) : 'https://cdn-icons-png.flaticon.com/512/456/456283.png' }}" 
+                    alt="Profile Picture" 
+                    class="img-fluid rounded-circle mb-3" 
+                    width="35" height="35">
                     <div class="ms-3">
-                        <a class="card-title text-decoration-none h4" 
-                            href="{{ auth()->check() && $post->user->id === auth()->user()->id ? route('profile.show') : route('profile.index', $post->user) }}" 
-                            style="color: #388087;">
+                        <a class="card-title text-decoration-none h3" style="color: #388087;" href="{{ $post->ownPost() ? 
+                        route('profile.show') : route('profile.index', $post->user) }}">
                             {{ $post->user->display_name }}
-                        </a>
+                        </a>                        
                         <p class="text-secondary small text-xs opacity-75">
                             <i>{{ $post->updated_at->setTimezone('Asia/Manila')->format('j M Y \a\t g:ia') }}</i>
                         </p>
                     </div>
                 </div>
-                <p class="card-text" style="font-size: 20px;">{{ $post->content }}</p>
+                <p class="card-text" style="font-size: 18px; color: #388087;">{{ $post->content }}</p>
                 @if ($post->image)
-                    <img src="{{ asset('/storage/images/'.$post->image) }}" alt="Post Image" class="img-fluid" style="max-width: 100%; height: auto;">
+                    <img height="150px" width="150px" src="{{ asset('/storage/images/'.$post->image) }}" alt="Post Image" class="img-fluid">
                 @endif
-                <span class="comment-count">
+                @if ($post->original_post_id)
+                    <div class="d-flex justify-content-center align-items-center border" style="background-color: #FFFFFF;">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="{{ ($post->originalPostData && $post->originalPostData->user->profileInformation && $post->originalPostData->user->profileInformation->image) ? 
+                                asset('/storage/images/' . $post->originalPostData->user->profileInformation->image) : 'https://cdn-icons-png.flaticon.com/512/456/456283.png' }}" 
+                                alt="Profile Picture" class="img-fluid rounded-circle" width="35" height="35">
+                                <div class="ms-2">
+                                    <a class="card-text text-decoration-none h4" style="font-size: 20px; color: #388087;" href="{{ (auth()->check() && $post->originalPostData ? 
+                                    $post->originalPostData->user->id === auth()->user()->id : $post->user->id === auth()->user()->id) ? route('profile.show') : route('profile.index', $post->originalPostData ? 
+                                    $post->originalPostData->user : $post->user) }}">
+                                        {{ $post->originalPostData ? $post->originalPostData->user->full_name : $post->user->full_name }}
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="card-text" style="font-size: 18px; color: #388087;">
+                                {{ $post->originalPostData ? $post->originalPostData->content : 'Post is no longer available' }}
+                            </p>
+                            @if ($post->originalPostData && $post->originalPostData->image)
+                                <img height="150px" width="150px" src="{{ asset('/storage/images/' . $post->originalPostData->image) }}" alt="Original Post Image" class="img-fluid">
+                            @endif
+                        </div>
+                    </div>
+                @endif
+                <span class="comment-count text-muted small ms-1">
                     {{ $post->commentCount() === 0 ? '' : $post->commentCount() . ' ' . ($post->commentCount() === 1 ? 'Comment' : 'Comments') }}
                 </span>
             </div>
