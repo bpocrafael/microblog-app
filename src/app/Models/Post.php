@@ -74,4 +74,9 @@ class Post extends Model
 
         return $authenticatedUser && $this->user && $this->user->id === $authenticatedUser->id;
     }
+
+    public function getOriginalPostDataAttribute()
+    {
+        return $this->originalPost;
+    }
 }

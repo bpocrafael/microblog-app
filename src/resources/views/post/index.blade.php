@@ -36,29 +36,28 @@
                     <img height="150px" width="150px" src="{{ asset('/storage/images/'.$post->image) }}" alt="Post Image" class="img-fluid">
                 @endif
                 @if ($post->original_post_id)
-                    @if ($originalPost = $post->originalPost)
                     <div class="d-flex justify-content-center align-items-center border" style="background-color: #FFFFFF;">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">
-                                <img src="{{ $originalPost->user->profileInformation && $originalPost->user->profileInformation->image ? 
-                                asset('/storage/images/' . $originalPost->user->profileInformation->image) : 'https://cdn-icons-png.flaticon.com/512/456/456283.png' }}" 
-                                alt="Profile Picture" 
-                                class="img-fluid rounded-circle" 
-                                width="35" height="35">
+                                <img src="{{ ($post->originalPostData && $post->originalPostData->user->profileInformation && $post->originalPostData->user->profileInformation->image) ? 
+                                asset('/storage/images/' . $post->originalPostData->user->profileInformation->image) : 'https://cdn-icons-png.flaticon.com/512/456/456283.png' }}" 
+                                alt="Profile Picture" class="img-fluid rounded-circle" width="35" height="35">
                                 <div class="ms-2">
-                                    <a class="card-text text-decoration-none h4" style="font-size: 20px; color: #388087;" href="{{ (auth()->check() && $originalPost->user->id === auth()->user()->id) ? 
-                                    route('profile.show') : route('profile.index', $originalPost->user) }}">
-                                        {{ $originalPost->user->display_name }}
+                                    <a class="card-text text-decoration-none h4" style="font-size: 20px; color: #388087;" href="{{ (auth()->check() && $post->originalPostData ? 
+                                    $post->originalPostData->user->id === auth()->user()->id : $post->user->id === auth()->user()->id) ? route('profile.show') : route('profile.index', $post->originalPostData ? 
+                                    $post->originalPostData->user : $post->user) }}">
+                                        {{ $post->originalPostData ? $post->originalPostData->user->full_name : $post->user->full_name }}
                                     </a>
                                 </div>
                             </div>
-                            <p class="card-text" style="font-size: 18px; color: #388087;">{{ $originalPost->content }}</p>
-                            @if ($originalPost->image)
-                                <img height="150px" width="150px" src="{{ asset('/storage/images/'.$originalPost->image) }}" alt="Original Post Image" class="img-fluid">
+                            <p class="card-text" style="font-size: 18px; color: #388087;">
+                                {{ $post->originalPostData ? $post->originalPostData->content : 'Post is no longer available' }}
+                            </p>
+                            @if ($post->originalPostData && $post->originalPostData->image)
+                                <img height="150px" width="150px" src="{{ asset('/storage/images/' . $post->originalPostData->image) }}" alt="Original Post Image" class="img-fluid">
                             @endif
                         </div>
                     </div>
-                    @endif
                 @endif
                 <div class="d-flex justify-content-between align-items-center">    
                     <div>
