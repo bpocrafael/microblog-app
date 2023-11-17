@@ -11,7 +11,7 @@
                         <div class="d-flex align-items-center mb-3">
                             <img src="{{ auth()->user()->profileInformation && auth()->user()->profileInformation->image ? 
                             asset('/storage/images/' . auth()->user()->profileInformation->image) : 'https://cdn-icons-png.flaticon.com/512/456/456283.png' }}" 
-                            alt "Profile Picture" 
+                            alt = "Profile Picture" 
                             class="img-fluid rounded-circle" 
                             width="35" height="35">
                             <h4 class="card-title ms-2" style="color: #388087;">{{ auth()->user()->full_name }}</h4>
@@ -47,7 +47,7 @@
                                     </div>   
                                 </div>
                                 @if (!$post->original_post_id || $post->originalPost)
-                                    <button id="share-button" type="submit" class="btn text-white w-100" style="background-color: #388087;">
+                                    <button onclick="preventMultipleSubmissions('share-button')" id="share-button" type="submit" class="btn text-white w-100" style="background-color: #388087;">
                                         Share
                                     </button>
                                 @endif

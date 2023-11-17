@@ -35,13 +35,23 @@
                             @foreach ($postResults as $post)
                                 <div class="card mt-3">
                                     <div class="card-body">
-                                        <a href="{{ route('posts.show', $post->id) }}" class="card-title h5" style="text-decoration: none">{{ $post->user->name }}</a>
+                                        <a href="{{ route('posts.show', $post->id) }}" class="card-title h5" style="text-decoration: none">{{ $post->user->full_name }}</a>
                                         <p class="card-text">{{ $post->content }}</p>
                                     </div>
                                 </div>
                             @endforeach
                         @endif
                     @endif
+                    <div class="mt-4">
+                        <h3 class="my-2 text-center" style="color: #388087;">People you may know</h3>
+                        <ul class="list-group">
+                            @foreach ($randomUsers as $randomUser)
+                                <li class="list-group-item">
+                                    <a href="{{ route('profile.index', ['user' => $randomUser->id]) }}" class="text-dark text-decoration-none">{{ $randomUser->display_name }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class SearchService
 {
@@ -36,12 +37,18 @@ class SearchService
         });
 
         $postResults = Post::where(function ($query) use ($words) {
-            foreach ($words as $word) {
-                $escapedWord = preg_replace('/(\[|\]|\(|\))/', '\\\\$1', preg_quote($word, '/'));
-                $query->orWhereRaw("content REGEXP '[[:<:]]" . $escapedWord . "[[:>:]]'");
-            }
+            $query->orWhere(function ($innerQuery) use ($words) {
+                foreach ($words as $word) {
+                    $escapedWord = preg_quote($word, '/');
+                    $escapedWord = str_replace(['\'', '"'], ['\\\'', '\"'], $escapedWord);
+                    $innerQuery->orWhereRaw("content REGEXP ?", ['[[:<:]]' . $escapedWord . '[[:>:]]']);
+                }
+            });
         })->get();
-
-        return compact('userResults', 'postResults');
+        
+        
+        $randomUsers = Auth::user()->getRandomUsersAttribute();
+        
+        return compact('userResults', 'postResults', 'randomUsers');
     }
 }

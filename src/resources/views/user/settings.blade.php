@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
                                     <div class="d-flex justify-content-end">
-                                        <button type="button" class="btn text-white" style="background-color: #8d8c8a">Cancel</button>
+                                        <button type="button" onclick="window.location='{{ route('profile.show') }}'" class="btn text-white" style="background-color: #8d8c8a">Cancel</button>
                                         <button type="submit" class="btn text-white" style="margin-left: 10px; background-color: #44abf8;">Save</button>
                                     </div>
                                 </div>

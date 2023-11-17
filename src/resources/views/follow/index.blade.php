@@ -23,6 +23,21 @@
                                
             @endauth
             </div>
+            <div class="text-center mb-2 d-flex justify-content-center">
+                <span class="post-count text-muted small me-4">
+                    {{ $user->postCount() === 0 ? '' : $user->postCount() }}<br>
+                    {{ $user->postCount() === 1 ? 'Post' : 'Posts' }}
+                </span>
+                <span class="following-count text-muted small me-2">
+                    {{ $user->followingCount() === 0 ? '' : $user->followingCount() }}<br>
+                    {{ $user->followingCount() === 1 ? 'Following' : 'Followings' }}
+                </span>
+                <span class="follower-count text-muted small ms-2">
+                    {{ $user->followerCount() === 0 ? '' : $user->followerCount() }}<br>
+                    {{ $user->followerCount() === 1 ? 'Follower' : 'Followers' }}
+                </span>
+            </div>
+            
             <div class="d-flex pt-1 justify-content-center">
                 <button type="button" class="btn me-1" data-bs-toggle="modal" data-bs-target="#followersModal" style="color: #388087; border-color: #388087;">Followers</button>
                 <button type="button" class="btn me-1" data-bs-toggle="modal" data-bs-target="#followingModal" style="color: #388087; border-color: #388087;">Following</button>

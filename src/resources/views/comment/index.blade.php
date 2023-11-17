@@ -59,12 +59,14 @@
                 <form id="comment-form" action="{{ route('comments.store',$post->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="d-flex mt-2">
-                        <textarea name="content" class="fs-6 form-control" rows="1" maxlength="140" placeholder="Add your comment"></textarea>
+                        <textarea name="content" class="fs-6 form-control" rows="1" maxlength="140" id="content" placeholder="Add your comment"></textarea>
+                        
                         <button onclick="preventMultipleSubmissions('comment-button')" id="comment-button" type="submit" class="btn" style="font-size: 20px; color: #388087;">
                             <i class="bi bi-send"></i>
                         </button>
                     </div>
                 </form>
+                <p id="char-count-message" style="color: #f48882; display: none;">You've reached the limit.</p>
             </div>
         </div>
     </div>

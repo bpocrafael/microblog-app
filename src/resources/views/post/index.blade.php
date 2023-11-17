@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="post-container">
     @foreach ($posts as $post)
         <div class="card mt-2 col-md-7 mx-auto" style="background-color: #FAF9F6; border: 1px solid #388087;">
             <div class="card-header d-flex justify-content-end" style="border-bottom: 1px solid #388087;">

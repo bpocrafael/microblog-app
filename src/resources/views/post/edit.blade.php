@@ -20,8 +20,17 @@
                             <div class="form-group">
                                 <textarea class="form-control" style="border: 1px solid #388087;"  id="content" name="content" rows="4" maxlength="140">{{ $post->content }}</textarea>
                             </div>
+                            <p id="char-count-message" style="color: #f48882; display: none;">You've reached the limit.</p>
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <input type="file" class="form-control-file" id="image" name="image">
+                                @if ($post->image)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="delete_image" id="delete_image">
+                                        <label class="form-check-label" for="delete_image">
+                                            Delete Image
+                                        </label>
+                                    </div>
+                                @endif
                                 <button type="submit" class="btn text-white" style="background-color: #388087; font-size: 15px">
                                     Update
                                 </button>
@@ -32,6 +41,7 @@
                             @endif
                         </form>
                     </div>
+                    
                 </div>
             </div>
         </div>

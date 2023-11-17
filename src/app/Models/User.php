@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -118,5 +119,36 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return $this->name;
+    }
+
+    public function followerCount(): int
+    {
+        return $this->followers()->count();
+    }
+
+    public function followingCount(): int
+    {
+        return $this->followings()->count();
+    }
+
+    public function postCount(): int
+    {
+        return $this->userPosts()->count();
+    }
+
+    /**
+     * Get random users from microblog.
+     *
+     * @return Collection
+     */
+    public function getRandomUsersAttribute(): Collection
+    {
+        $followingIds = optional($this->following)->pluck('id') ?? [];
+
+        return User::where('id', '!=', $this->id)
+            ->whereNotIn('id', $followingIds)
+            ->inRandomOrder()
+            ->take(5)
+            ->get();
     }
 }
