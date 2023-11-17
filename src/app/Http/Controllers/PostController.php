@@ -69,25 +69,30 @@ class PostController extends Controller
     public function update(PostRequest $request, Post $post): RedirectResponse
     {
         $post->content = $request->input('content');
-
+    
         if ($request->hasFile('image')) {
             $request->validate([
                 'image' => ['required', 'image'],
             ]);
-
+    
             if ($post->image) {
                 unlink(public_path('storage/images/' . $post->image));
             }
-
+    
             $newImage = time() . '.' . $request->image->extension();
             $request->image->move(public_path('storage/images'), $newImage);
             $post->image = $newImage;
+        } elseif ($request->has('delete_image')) {
+            // Delete the existing image
+            unlink(public_path('storage/images/' . $post->image));
+            $post->image = null;
         }
-
+    
         $post->save();
-
+    
         return redirect()->route('posts.show', $post->id);
     }
+    
     /**
      * Remove/delete post.
      */

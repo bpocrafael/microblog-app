@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\Post;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserService
 {
@@ -39,18 +40,18 @@ class UserService
      *
      * @return array<string, mixed>
      */
-    public function getUserHomePosts(): array
+    public function getUserHomePosts(): LengthAwarePaginator
     {
         /** @var User $user */
         $user = User::with('followings')
             ->find(auth()->id());
-
+    
         $posts = Post::with('originalPost', 'user')
             ->whereIn('user_id', $user->followings->pluck('id')->push($user->id))
             ->latest()
             ->paginate(4);
-
-        return ['posts' => $posts, 'originalPost' => null];
+    
+        return $posts;
     }
 
     /**

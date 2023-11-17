@@ -20,6 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
     Route::get('/home', [UserController::class, 'home'])->name('user.home');
     Route::resource('posts', PostController::class);
+    Route::get('/get-post-view', [PostController::class, 'getPostView']);
     Route::get('/search/result', [SearchController::class, 'search'])->name('search.result');
     Route::post('users/{user}/follow', [FollowerController::class, 'follow'])->name('users.follow');
     Route::post('users/{user}/unfollow', [FollowerController::class, 'unfollow'])->name('users.unfollow');

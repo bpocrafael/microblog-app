@@ -11,27 +11,25 @@
                         @if (Auth::user() && $following->id !== Auth::user()->id)
                             <li class="list-group-item d-flex justify-content-between align-items-center" style="color: #388087;">
                                 <div>
-                                    @if ($following->profileInformation && $following->profileInformation->image)
-                                        <img src="{{ asset('/storage/images/' . $following->profileInformation->image) }}" alt="Profile Picture" class="img-fluid rounded-circle" width="40" height="40">
-                                    @else
-                                        <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle" width="40" height="40">
-                                    @endif
-                                    <span class="ms-2" style="color: #388087;">{{ $following->full_name }}</span>
+                                    <img src="{{ $following->profileInformation && $following->profileInformation->image ? asset('/storage/images/' . $following->profileInformation->image) : 'https://cdn-icons-png.flaticon.com/512/456/456283.png' }}" 
+                                    alt="Profile Picture" 
+                                    class="img-fluid rounded-circle" 
+                                    width="35" height="35">
+                                    <a href="{{ route('profile.index', ['user' => $following->id]) }}" class="text-decoration-none" style="color: #388087;">{{ $following->display_name }}</a>
                                 </div>
-                                @if ($userFollowService->isFollowingExist(Auth::user(), $following))
-                                    <button class="toggle-button btn btn-danger btn-sm mt-2" data-user="{{ $following->id }}" data-action="unfollow">Unfollow</button>
-                                @else
-                                    <button class="toggle-button btn btn-primary btn-sm mt-2" data-user="{{ $following->id }}" data-action="follow">Follow</button>
-                                @endif
+                                <button class="toggle-button btn btn-{{ $userFollowService->isFollowingExist(Auth::user(), $following) ? 'danger' : 'primary' }} btn-sm mt-2" 
+                                        data-user="{{ $following->id }}" 
+                                        data-action="{{ $userFollowService->isFollowingExist(Auth::user(), $following) ? 'unfollow' : 'follow' }}">
+                                    {{ $userFollowService->isFollowingExist(Auth::user(), $following) ? 'Unfollow' : 'Follow' }}
+                                </button>
                             </li>
                         @else
                             <li class="list-group-item" style="color: #388087;">
-                                @if ($following->profileInformation && $following->profileInformation->image)
-                                    <img src="{{ asset('/storage/images/' . $following->profileInformation->image) }}" alt="Profile Picture" class="img-fluid rounded-circle" width="40" height="40">
-                                @else
-                                    <img src="https://cdn-icons-png.flaticon.com/512/456/456283.png" alt="Profile Picture" class="img-fluid rounded-circle" width="40" height="40">
-                                @endif
-                                <span class="ms-2" style="color: #388087;">{{ $following->full_name }}</span>
+                                <img src="{{ $following->profileInformation && $following->profileInformation->image ? asset('/storage/images/' . $following->profileInformation->image) : 'https://cdn-icons-png.flaticon.com/512/456/456283.png' }}" 
+                                alt="Profile Picture" 
+                                class="img-fluid rounded-circle" 
+                                width="35" height="35">
+                                <a href="{{ route('profile.show', ['user' => $following->id]) }}" class="text-decoration-none" style="color: #388087;">{{ $following->display_name }}</a>
                             </li>
                         @endif
                     @endforeach

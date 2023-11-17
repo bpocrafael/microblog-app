@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Services\UserFollowService;
 use Illuminate\Http\RedirectResponse;
@@ -35,13 +36,16 @@ class UserController extends Controller
         return view('user.profile', $userData, ['userFollowService' => $this->userFollowService]);
     }
 
-    /**
-     * View followed users posts.
-     */
-    public function home(): View
+    public function home(Request $request): mixed
     {
-        $postData = $this->userService->getUserHomePosts();
-        return view('user.home', $postData);
+        $offset = $request->input('offset', 0);
+        $posts = $this->userService->getUserHomePosts($offset);
+    
+        if ($request->ajax()) {
+            return response()->json($posts);
+        }
+    
+        return view('user.home', compact('posts'));
     }
 
     public function logout(): RedirectResponse

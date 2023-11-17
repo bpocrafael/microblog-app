@@ -19,7 +19,7 @@ class ResetPasswordRequest extends FormRequest
             'password' => [
                 'required',
                 'string',
-                'min:6',
+                'min:8',
                 'confirmed',
                 'regex: /^(?=.*[A-Za-z])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\-]).{8,}$/',
             ],

@@ -19,15 +19,14 @@
 
                   <form id="login-form" action="{{ route('login.auth') }}" method="POST" class="mx-1 mx-md-4">
                     @csrf
-                    <div class="d-flex flex-row align-items-center mb-4">
+                    <div class="d-flex flex-row align-items-center mb-2">
                       <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
                         <label class="form-label" for="form3Example3c" style="color: #388087;">Email</label>
-                        <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" placeholder="" autofocus>
-
-                        @error('email')
-                          <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                        <input id="email" type="text" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" value="{{ old('email') }}" autocomplete="email" placeholder="" autofocus>
+                        @if ($errors->has('email'))
+                          <div class="text-danger mt-1">Please enter a valid email address</div>
+                        @endif
                       </div>
                     </div>
 
@@ -38,7 +37,7 @@
                         <input name="password" type="password" id="form3Example4c" class="form-control mb-1"/>
 
                         @error('password')
-                          <div class="text-danger">{{ $message }}</div>
+                          <div class="text-danger mt-1">Please enter a valid password</div>
                         @enderror
                         <a href="{{ route('password.request') }}" style="text-decoration: none; color: #6fb3b8">Forgot Password?</a>
                       </div>

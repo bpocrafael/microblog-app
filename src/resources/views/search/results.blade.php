@@ -16,23 +16,18 @@
                         @if (count($userResults) > 0)
                             <ul class="list-group">
                                 @foreach ($userResults as $user)
-                                    @if(Auth::user() != $user)
-                                        @if ($userFollowService->isFollowingExist(auth()->user(), $user))
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
-                                                <button class="toggle-button btn btn-danger btn-sm mt-2" data-user="{{ $user->id }}" data-action="unfollow">Unfollow</button>
-                                            </li>
-                                        @else
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <a href="{{ route('profile.index', ['user' => $user->id]) }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
-                                                <button class="toggle-button btn btn-primary btn-sm mt-2" data-user="{{ $user->id }}" data-action="follow">Follow</button>
-                                            </li>
+                                    <li class="list-group-item {{ Auth::user() && Auth::user()->id != $user->id ? 'd-flex justify-content-between align-items-center' : 'mb-3' }}">
+                                        <a href="{{ Auth::user() && Auth::user()->id != $user->id ? route('profile.index', ['user' => $user->id]) : route('profile.show') }}" 
+                                        class="text-dark text-decoration-none">{{ $user->display_name }}
+                                        </a>
+                                        @if(Auth::user() && Auth::user()->id != $user->id)
+                                            <button class="toggle-button btn btn-{{ $userFollowService->isFollowingExist(auth()->user(), $user) ? 'danger' : 'primary' }} btn-sm mt-2" 
+                                                    data-user="{{ $user->id }}" 
+                                                    data-action="{{ $userFollowService->isFollowingExist(auth()->user(), $user) ? 'unfollow' : 'follow' }}">
+                                                {{ $userFollowService->isFollowingExist(auth()->user(), $user) ? 'Unfollow' : 'Follow' }}
+                                            </button>
                                         @endif
-                                    @else
-                                        <li class="list-group-item">
-                                            <a href="{{ route('profile.show') }}" class="text-dark text-decoration-none">{{ $user->name }}</a>
-                                        </li>
-                                    @endif
+                                    </li>
                                 @endforeach
                             </ul>
                         @endif
@@ -40,13 +35,23 @@
                             @foreach ($postResults as $post)
                                 <div class="card mt-3">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ $post->user->name }}</h5>
+                                        <a href="{{ route('posts.show', $post->id) }}" class="card-title h5" style="text-decoration: none">{{ $post->user->full_name }}</a>
                                         <p class="card-text">{{ $post->content }}</p>
                                     </div>
                                 </div>
                             @endforeach
                         @endif
                     @endif
+                    <div class="mt-4">
+                        <h3 class="my-2 text-center" style="color: #388087;">People you may know</h3>
+                        <ul class="list-group">
+                            @foreach ($randomUsers as $randomUser)
+                                <li class="list-group-item">
+                                    <a href="{{ route('profile.index', ['user' => $randomUser->id]) }}" class="text-dark text-decoration-none">{{ $randomUser->display_name }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
